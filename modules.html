@@ -1,0 +1,2127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modules - APU-CYBER-CLUB</title>
+    <meta name="description" content="Explore our comprehensive modules on cybersecurity topics including Phishing, DeepFake, and RAT & Malware.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            transition: all 0.3s ease;
+        }
+
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #f1f5f9;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --text-muted: #94a3b8;
+            --accent-primary: #3b82f6;
+            --accent-hover: #2563eb;
+            --accent-light: #dbeafe;
+            --border-color: #e2e8f0;
+            --shadow-light: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            --shadow-medium: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-large: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --accent-primary: #60a5fa;
+            --accent-hover: #3b82f6;
+            --accent-light: #1e3a8a;
+            --border-color: #475569;
+            --shadow-light: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+            --shadow-medium: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+            --shadow-large: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+        
+        [data-theme="dark"] .navbar {
+             background-color: rgba(15, 23, 42, 0.85);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .navbar {
+            background: var(--bg-primary);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            background-color: rgba(var(--bg-primary-rgb, 255, 255, 255), 0.85);
+            height: 84px;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .logo {
+            width: 77px;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s ease, transform 0.3s ease;
+            position: relative;
+            padding: 0.25rem 0;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--accent-primary);
+            transform: translateY(-2px);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -0.3rem;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--accent-primary);
+            border-radius: 2px;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 0.4rem 0.6rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle:hover {
+            background: var(--bg-secondary);
+            transform: scale(1.05);
+        }
+
+        .theme-icon {
+            font-size: 1.1rem;
+        }
+
+        #menu-toggle {
+            display: none;
+        }
+
+        .menu-icon {
+            display: none;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .menu-icon span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: var(--text-primary);
+            margin: 5px;
+            border-radius: 2px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            text-align: center;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background: var(--accent-primary);
+            color: white;
+            box-shadow: var(--shadow-medium);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-large);
+        }
+
+        .btn-full {
+            width: 100%;
+        }
+
+        .page-header {
+            padding: 5rem 0;
+            text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)),
+                        url('images/classroom-apu.webp');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: #fff;
+        }
+
+        .page-title {
+            font-size: clamp(2.5rem, 6vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+        
+        .page-header .page-title {
+             color: #fff;
+        }
+
+        .page-description {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 42rem;
+            margin: 0 auto;
+        }
+        
+        .page-header .page-description {
+             color: rgba(255,255,255,0.9);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .section-description {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 42rem;
+            margin: 0 auto;
+        }
+
+        .footer {
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            padding: 3rem 0 1.5rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.875rem;
+        }
+
+        .footer a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer a:hover {
+            color: var(--accent-primary);
+        }
+
+        .footer-top {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-brand {
+            max-width: 280px;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .footer-logo {
+            width: 50px;
+            height: auto;
+        }
+
+        .footer-brand-text {
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: var(--text-primary);
+        }
+
+        .footer-description {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-section h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .footer-icons {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .footer-icons img {
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
+            filter: grayscale(60%);
+            transition: filter 0.2s ease;
+        }
+        
+        [data-theme="dark"] .footer-icons img {
+            filter: brightness(0) invert(1);
+        }
+
+        .footer-icons img:hover {
+            filter: none;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            padding-top: 1rem;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .filters {
+            padding: 2rem 0;
+            background: var(--bg-primary);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1.5rem;
+            border: 1px solid var(--border-color);
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+
+        .courses {
+            padding: 4rem 0;
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .course-card {
+            background: var(--bg-primary);
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow-medium);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .course-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-large);
+        }
+
+        .course-image {
+            width: 100%;
+            height: 16rem;
+            object-fit: cover;
+        }
+
+        .course-content {
+            padding: 1.5rem;
+        }
+
+        .course-category {
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.375rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .course-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .course-description {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+            gap: 0.5rem;
+        }
+
+        .pagination button {
+            background: var(--accent-primary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .pagination button:hover:not(:disabled) {
+            background: var(--accent-hover);
+        }
+
+        .pagination button.disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .faq-item { display: none; }
+        .feature-card { display: none; }
+        .tool-card { display: none; }
+        
+        .module-card {
+            background: var(--bg-primary);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-medium);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+        }
+
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-large);
+        }
+
+        .module-card .thumbnail {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+
+        .module-card-content {
+            flex-grow: 1;
+        }
+
+        .module-card h3 {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            margin: 0 0 0.25rem 0;
+        }
+
+        .module-card p {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        .module-card .meta {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        .read-more {
+            color: var(--accent-primary);
+            text-decoration: none;
+            font-weight: 500;
+            margin-left: auto;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: var(--accent-light);
+            transition: background-color 0.3s ease, transform 0.2s ease, color 0.3s ease;
+        }
+
+        .read-more:hover {
+            background-color: var(--accent-primary);
+            color: white;
+            text-decoration: none;
+            transform: scale(1.1);
+        }
+
+        .module-detail {
+            display: none;
+            padding: 2rem 0;
+        }
+        .show-detail .module-detail {
+            display: block;
+        }
+        .show-detail .modules-container {
+            display: none;
+        }
+        
+        .article-header {
+             margin-bottom: 1.5rem;
+        }
+        .article-meta {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        .article-thumbnail {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .module-content h2 {
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.25rem;
+        }
+        .module-content p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        .module-content ul, .module-content ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+        .module-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .back-to-modules {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--accent-primary);
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            border-radius: 4px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 1.5rem;
+            border: none;
+            cursor: pointer;
+        }
+        .back-to-modules:hover {
+            background-color: var(--accent-hover);
+            text-decoration: none;
+            transform: translateY(-2px);
+        }
+        .back-to-modules i {
+            margin-right: 0.5rem;
+        }
+
+        .phishing-hero {
+            background: linear-gradient(135deg, var(--accent-light), var(--bg-secondary));
+            padding: 2rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+        
+        [data-theme="dark"] .phishing-hero {
+             background: linear-gradient(135deg, rgba(60, 130, 246, 0.1), rgba(30, 41, 59, 0.5));
+             border-bottom-color: var(--border-color);
+        }
+
+        .phishing-hero h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+        }
+
+        .phishing-hero p {
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .info-card {
+            background: var(--bg-primary);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-light);
+        }
+
+        .info-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-medium);
+            border-color: var(--accent-primary);
+        }
+
+        .info-card h3 {
+            color: var(--accent-primary);
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-card h3 i {
+            font-size: 1.5rem;
+        }
+
+        .info-card p,
+        .info-card ul {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .info-card ul {
+            padding-left: 1.5rem;
+        }
+
+        .info-card ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .simulation-container.phishing-sim {
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            margin-top: 2rem;
+        }
+
+        .email-container {
+            background: var(--bg-primary);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .email-item {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .email-item:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .email-icon {
+            font-size: 2rem;
+            color: #ef4444;
+        }
+
+        .email-details {
+            flex: 1;
+        }
+
+        .email-sender {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .email-subject {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .email-time {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .email-content {
+            padding: 2rem;
+            background: var(--bg-primary);
+            display: none;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .email-content.show {
+            display: block;
+        }
+
+        .email-header {
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .email-header h3 {
+            color: var(--text-primary);
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .email-from {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .email-body {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .email-body p {
+            margin-bottom: 1rem;
+        }
+
+        .suspicious-details {
+            background: rgba(239, 68, 68, 0.05);
+            border-left: 4px solid #ef4444;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .suspicious-details h4 {
+            color: #ef4444;
+            margin-bottom: 0.5rem;
+        }
+
+        .suspicious-details ul {
+            list-style: none;
+            padding-left: 0;
+            color: #f87171;
+        }
+        
+        [data-theme="dark"] .suspicious-details ul {
+            color: #fca5a5;
+        }
+
+        .suspicious-details ul li {
+            padding: 0.25rem 0;
+        }
+
+        .phishing-button {
+            display: inline-block;
+            background: #f59e0b;
+            color: #1f293b;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 1.5rem 0;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-family: "Inter", sans-serif;
+            font-size: 1rem;
+        }
+
+        .phishing-button:hover {
+            background: #d97706;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(245, 158, 11, 0.3);
+        }
+
+        .fake-login {
+            max-width: 400px;
+            margin: 0 auto;
+            background: var(--bg-primary);
+            padding: 2rem;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-medium);
+            display: none;
+        }
+        
+        [data-theme="dark"] .fake-login {
+             border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .fake-login.show {
+            display: block;
+        }
+
+        .bank-logo {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .bank-logo img {
+            max-height: 80px;
+            filter: var(--logo-filter, none);
+        }
+        
+        [data-theme="dark"] .bank-logo img {
+             filter: brightness(0) invert(1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-family: "Inter", sans-serif;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            background-color: var(--bg-primary);
+        }
+
+        .login-button {
+            width: 100%;
+            background: #f59e0b;
+            color: #1f293b;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1rem;
+            font-family: "Inter", sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .login-button:hover {
+            background: #d97706;
+        }
+
+        .url-info {
+            margin-top: 1rem;
+            text-align: center;
+            color: #ef4444;
+            font-size: 0.85rem;
+        }
+
+        .alert-box {
+            background: rgba(239, 68, 68, 0.05);
+            border: 1px solid #ef4444;
+            border-radius: 10px;
+            padding: 2rem;
+            display: none;
+        }
+
+        .alert-box.show {
+            display: block;
+        }
+
+        .alert-box h3 {
+            color: #ef4444;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .alert-box h3 i {
+            font-size: 2rem;
+        }
+        
+        .alert-box p {
+             color: var(--text-secondary);
+        }
+
+        .alert-explanation {
+            background: var(--bg-tertiary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+        
+        [data-theme="dark"] .alert-explanation {
+             background: rgba(30, 41, 59, 0.7);
+        }
+
+        .alert-explanation h4 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .alert-explanation ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .alert-explanation ul li {
+            padding: 0.5rem 0;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .alert-explanation ul li strong {
+            color: var(--accent-primary);
+        }
+
+        .alert-explanation code {
+            background: var(--accent-light);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            color: var(--accent-primary);
+            font-family: 'Courier New', monospace;
+        }
+
+        .reset-button {
+            background: var(--accent-primary);
+            color: #fff;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            font-family: "Inter", sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .reset-button:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .ai-analysis-container {
+            margin-top: 2rem;
+        }
+        
+        .ai-analysis-container h3,
+        .ai-analysis-container p {
+             color: var(--text-primary);
+        }
+        
+        .ai-analysis-container p {
+             color: var(--text-secondary);
+             margin-bottom: 1rem;
+        }
+
+        .ai-textarea {
+            width: 100%;
+            min-height: 200px;
+            padding: 1rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: "Inter", sans-serif;
+            font-size: 0.95rem;
+            resize: vertical;
+        }
+        
+        .ai-textarea:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            background-color: var(--bg-primary);
+        }
+
+        .ai-button {
+            background: var(--accent-primary);
+            color: #fff;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1rem;
+            font-family: "Inter", sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .ai-button:hover:not(:disabled) {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .ai-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .loader {
+            border: 3px solid rgba(100, 100, 100, 0.2);
+            border-top: 3px solid var(--accent-primary);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+        }
+        
+        [data-theme="dark"] .loader {
+             border: 3px solid rgba(255, 255, 255, 0.2);
+             border-top: 3px solid var(--accent-primary);
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .ai-result {
+            background: var(--accent-light);
+            border: 1px solid var(--accent-primary);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            display: none;
+        }
+        
+        [data-theme="dark"] .ai-result {
+             background: rgba(60, 130, 246, 0.1);
+             border-color: rgba(60, 130, 246, 0.5);
+        }
+
+        .ai-result.show {
+            display: block;
+        }
+
+        .ai-result h4 {
+            color: var(--accent-primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .ai-result-content {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+        
+        .rat-demo-terminal {
+            background-color: #1e1e1e;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            padding: 1rem;
+            border-radius: 4px;
+            height: 200px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            border: 1px solid var(--border-color);
+        }
+        .rat-demo-terminal .output-line {
+            margin-bottom: 0.2rem;
+        }
+        .rat-demo-terminal .command-line {
+            color: #00ff00;
+        }
+        .rat-demo-terminal .command-line .prompt {
+            color: #ffff00;
+        }
+
+
+        @media (max-width: 992px) {
+            .menu-icon {
+                display: block;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 84px;
+                left: 0;
+                width: 100%;
+                flex-direction: column;
+                background-color: var(--bg-primary);
+                border-bottom: 1px solid var(--border-color);
+                padding: 1rem 0;
+                gap: 0;
+                transform: translateY(-120%);
+                transition: transform 0.4s ease-in-out, box-shadow 0.4s ease;
+                box-shadow: none;
+                z-index: 99;
+            }
+
+            .nav-link {
+                padding: 1rem 1.5rem;
+                width: 100%;
+                text-align: center;
+            }
+            
+            .nav-link:hover,
+            .nav-link.active {
+                transform: translateY(0);
+                background-color: var(--bg-secondary);
+            }
+            
+            .nav-link.active::after {
+                display: none;
+            }
+
+            .theme-toggle {
+                margin: 0.5rem 1.5rem;
+                align-self: center;
+            }
+
+            #menu-toggle:checked ~ .nav-links {
+                transform: translateY(0);
+                box-shadow: var(--shadow-medium);
+            }
+
+            #menu-toggle:checked + .menu-icon span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+            #menu-toggle:checked + .menu-icon span:nth-child(2) {
+                opacity: 0;
+            }
+            #menu-toggle:checked + .menu-icon span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -6px);
+            }
+            
+            .footer-top {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .filter-buttons {
+                gap: 0.5rem;
+            }
+
+            .filter-btn {
+                padding: 0.375rem 1rem;
+                font-size: 0.875rem;
+            }
+            
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (min-width: 993px) {
+            .nav-links {
+                display: flex !important;
+            }
+        }
+            #loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #0a0f1a, #001f3f, #003366);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* stays on top */
+}
+    </style>
+</head>
+<body>
+    <div id="loader">
+          <img src="images/tech startup.gif" alt="loading animation" />
+      </div>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <img src="images/apu-logo.png" alt="APU Logo" class="logo">
+            </div>
+            
+            <input type="checkbox" id="menu-toggle">
+            <label for="menu-toggle" class="menu-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
+            
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="activities.html" class="nav-link">Activity</a>
+                <a href="courses.html" class="nav-link">Events</a>
+                <a href="tools.html" class="nav-link">Tools</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="my-acc.html" class="nav-link">Account</a>
+                <a href="blog.html" class="nav-link">Blog</a>
+                <a href="modules.html" class="nav-link active">Modules</a>
+               
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+                    <span class="theme-icon">🌙</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">Our Modules</h1>
+            <p class="page-description">
+                Explore our comprehensive modules on cybersecurity topics.
+            </p>
+        </div>
+    </section>
+
+    <div class="modules-container">
+        <section class="filters">
+            <div class="container">
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-category="All">All</button>
+                    <button class="filter-btn" data-category="Phishing">Phishing</button>
+                    <button class="filter-btn" data-category="DeepFake">DeepFake</button>
+                    <button class="filter-btn" data-category="RAT & Malware">RAT & Malware</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="courses">
+            <div class="container">
+                <div class="courses-grid" id="modules-grid">
+                </div>
+                <div class="pagination" id="pagination"></div>
+            </div>
+        </section>
+    </div>
+
+    <div class="module-detail">
+        <div class="container">
+            <section class="page-header article-header" style="display: block; padding: 2rem 0;">
+                <h1 class="page-title" id="detail-title">Loading...</h1>
+                <div class="article-meta" id="detail-meta">Loading...</div>
+            </section>
+            <article class="module-content">
+                <img id="detail-thumbnail" class="article-thumbnail" src="" alt="Module Thumbnail" style="display: none;">
+                <div id="detail-description"></div>
+                <h2>How It Works</h2>
+                <div id="detail-how-it-works"></div>
+                <h2>Prevention</h2>
+                <div id="detail-prevention"></div>
+                <h2>Interactive Demo</h2>
+                <div class="simulation-container" id="simulation-content">
+                </div>
+                <button id="back-to-modules-btn" class="back-to-modules">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Modules
+                </button>
+            </article>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container footer-top">
+            <div class="footer-brand">
+                <img src="images/logo.png" alt="APU Logo" class="footer-logo">
+                <span class="footer-brand-text">APU-CYBER-CLUB</span>
+                <p class="footer-description">
+                    Empowering learners worldwide with cutting-edge education and practical skills.
+                </p>
+            </div>
+
+            <div class="footer-links">
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="courses.html">Event</a></li>
+                        <li><a href="tools.html">Tools</a></li>
+                        <li><a href="about.html">About</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="modules.html">Modules</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="#">Support</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="/terms.html">Terms & Conditions</a></li>
+                        <li><a href="/privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <div class="footer-icons">
+                        <a href="https://share.google/yN5tUcceP5J6FSXSu"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook"></a>
+                        <a href="https://x.com/AsiaPacificU?t=HVzU0WvPy2al_yvAiaVZw&s=09"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/twitter.svg" alt="Twitter"></a>
+                        <a href="https://www.instagram.com/asiapacificuniversity?igsh=dHhtaXdqZmEyaGg0"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram"></a>
+                        <a href="https://www.linkedin.com/school/apumalaysia/"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 APU-CYBER-CLUB. All rights reserved. | Final Year Project</p>
+        </div>
+    </footer>
+
+    <script>
+        const modules = [
+            {
+                id: 1,
+                title: "Understanding Phishing",
+                category: "Phishing",
+                date: "2025-02-01",
+                thumbnail: "images/phishing.jpg",
+                description: "Learn to identify and protect yourself from phishing attacks.",
+                howItWorks: `<section class="phishing-hero">
+                                    <h1>Phishing Awareness Portal</h1>
+                                    <p>Learn to identify and protect yourself from phishing attacks.</p>
+                                </section>
+                                <div class="info-grid">
+                                <div class="info-card">
+                                    <h3><i class="fas fa-question-circle"></i> Definition</h3>
+                                    <p>Phishing is a type of social engineering attack where attackers attempt to steal sensitive information like usernames, passwords, or credit card details by disguising as a trustworthy entity in electronic communications.</p>
+                                </div>
+                                <div class="info-card">
+                                    <h3><i class="fas fa-bullseye"></i> Goal</h3>
+                                    <ul>
+                                        <li>Steal login credentials</li>
+                                        <li>Gain financial information</li>
+                                        <li>Install malware</li>
+                                        <li>Gain unauthorized access</li>
+                                    </ul>
+                                </div>
+                                <div class="info-card">
+                                    <h3><i class="fas fa-exclamation-triangle"></i> Characteristics</h3>
+                                    <ul>
+                                        <li>Urgent or threatening language</li>
+                                        <li>Suspicious sender addresses</li>
+                                        <li>Generic greetings</li>
+                                        <li>Unexpected attachments or links</li>
+                                    </ul>
+                                </div>
+                                <div class="info-card">
+                                    <h3><i class="fas fa-shield-alt"></i> Prevention</h3>
+                                    <ul>
+                                        <li>Verify sender's identity</li>
+                                        <li>Check URLs carefully</li>
+                                        <li>Do not enter credentials on suspicious sites</li>
+                                        <li>Use multi-factor authentication</li>
+                                    </ul>
+                                </div>
+                                <div class="info-card">
+                                    <h3><i class="fas fa-globe"></i> Forms</h3>
+                                    <ul>
+                                        <li><strong>Smishing:</strong> Phishing via SMS</li>
+                                        <li><strong>Vishing:</strong> Phishing via voice calls</li>
+                                        <li><strong>Spear Phishing:</strong> Targeted phishing</li>
+                                    </ul>
+                                </div>
+                            </div>`,
+                prevention: '',
+                simulation: `<div class="simulation-container phishing-sim">
+                                <div id="sim-step-1" class="email-container">
+                                    <div class="email-item" id="email-item">
+                                        <div class="email-icon">
+                                            <i class="fas fa-envelope-open-text"></i>
+                                        </div>
+                                        <div class="email-details">
+                                            <div class="email-sender">
+                                                <strong>Maybank2u</strong> <span style="color: var(--text-muted);"><security-alert@maybank2u-my.com></span>
+                                            </div>
+                                            <div class="email-subject">URGENT: Verify Your Account Now!</div>
+                                        </div>
+                                        <div class="email-time">Just now</div>
+                                    </div>
+                                </div>
+
+                                <div id="sim-step-2" class="email-content">
+                                    <div class="email-header">
+                                        <h3>URGENT: Verify Your Account Now!</h3>
+                                        <p class="email-from">From: Maybank2u <security-alert@maybank2u-my.com></p>
+                                    </div>
+                                    <div class="email-body">
+                                        <p>Dear Valued Customer,</p>
+                                        <p>We have detected unusual activity on your account. To prevent suspension, please verify your details within the next 24 hours by clicking the link below:</p>
+                                        
+                                        <div class="suspicious-details">
+                                            <h4>Suspicious Details:</h4>
+                                            <ul>
+                                                <li><strong>Date:</strong> ` + new Date().toLocaleDateString('en-US', { day: '2-digit', month: 'long', year: 'numeric' }) + `</li>
+                                                <li><strong>Time:</strong> ` + new Date(Date.now() - 15 * 60000).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }) + `</li>
+                                                <li><strong>Location:</strong> Hanoi, Vietnam</li>
+                                            </ul>
+                                        </div>
+                                        
+                                        <p>If you ignore this request, your account will be permanently locked.</p>
+                                        
+                                        <div style="text-align: center;">
+                                            <button id="phishing-link-btn" class="phishing-button">
+                                                <i class="fas fa-shield-alt"></i> Secure Account Now
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="sim-step-3" class="fake-login">
+                                    <div class="bank-logo">
+                                        <img src="images/mybank.png" alt="Bank Logo">
+                                    </div>
+                                    <p style="text-align: center; color: var(--text-secondary); margin-bottom: 1.5rem;">
+                                        Welcome to Maybank2u
+                                    </p>
+                                    
+                                    <div class="form-group">
+                                        <label>Username</label>
+                                        <input type="text" id="fake-username" placeholder="Enter your username" autocomplete="off">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label>Password</label>
+                                        <input type="password" id="fake-password" placeholder="Enter your password">
+                                    </div>
+                                    
+                                    <button id="fake-login-btn" class="login-button">
+                                        Login
+                                    </button>
+                                    
+                                    <p class="url-info">URL: https://maybank2u-my.com/login</p>
+                                </div>
+
+                                <div id="sim-step-4" class="alert-box">
+                                    <h3><i class="fas fa-exclamation-triangle"></i> You've Been Fooled!</h3>
+                                    <p>
+                                        This was a simulated phishing attempt. Never enter your credentials on suspicious websites.
+                                    </p>
+                                    
+                                    <div class="alert-explanation">
+                                        <h4>What's Wrong?</h4>
+                                        <ul>
+                                            <li>
+                                                <strong>Domain Mismatch:</strong>
+                                                The URL <code>maybank2u-my.com</code> is not the official domain. The correct one is likely <code>maybank2u.com.my</code>.
+                                                Always check the domain carefully.
+                                            </li>
+                                            <li>
+                                                <strong>Suspicious Sender:</strong>
+                                                The sender address is not from the official bank domain.
+                                            </li>
+                                            <li>
+                                                <strong>Urgent Language:</strong>
+                                                Phishing emails often use urgency to pressure you into acting quickly without thinking.
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <button id="reset-simulation" class="reset-button">
+                                        <i class="fas fa-redo"></i> Reset Simulation
+                                    </button>
+                                </div>
+
+                                <div class="ai-analysis-container">
+                                    <h3>AI Phishing Analysis</h3>
+                                    <p>Paste suspicious text or email content below to analyze it for potential phishing indicators.</p>
+                                    <textarea id="emailText" class="ai-textarea" placeholder="Paste suspicious text here..."></textarea>
+                                    
+                                    <button id="analyze-ai-button" class="ai-button">
+                                        <i class="fas fa-microscope"></i>
+                                        <span>Analyze Text</span>
+                                    </button>
+                                    
+                                    <div id="ai-loader" class="loader" style="display: none; margin: 1rem auto;"></div>
+                                    
+                                    <div id="analysisResult" class="ai-result">
+                                        <h4><i class="fas fa-chart-line"></i> Analysis Result</h4>
+                                        <div id="resultText" class="ai-result-content"></div>
+                                    </div>
+                                </div>
+                            </div>`,
+                simulationFunction: function() {
+                    const step1 = document.getElementById('sim-step-1');
+                    const step2 = document.getElementById('sim-step-2');
+                    const step3 = document.getElementById('sim-step-3');
+                    const step4 = document.getElementById('sim-step-4');
+                    const analyzeAiButton = document.getElementById('analyze-ai-button');
+                    const emailTextInput = document.getElementById('emailText');
+
+                    if (step1 && step2 && step3 && step4) {
+                        document.getElementById('email-item').addEventListener('click', () => {
+                            step2.classList.add('show');
+                            step1.style.opacity = '0.5';
+                        });
+
+                        document.getElementById('phishing-link-btn').addEventListener('click', () => {
+                            step2.classList.remove('show');
+                            step3.classList.add('show');
+                        });
+
+                        document.getElementById('fake-login-btn').addEventListener('click', () => {
+                            step3.classList.remove('show');
+                            step4.classList.add('show');
+                        });
+
+                        document.getElementById('reset-simulation').addEventListener('click', () => {
+                            step1.style.opacity = '1';
+                            step2.classList.remove('show');
+                            step3.classList.remove('show');
+                            step4.classList.remove('show');
+                            const userIn = document.getElementById('fake-username');
+                            const passIn = document.getElementById('fake-password');
+                            if(userIn) userIn.value = '';
+                            if(passIn) passIn.value = '';
+                        });
+                    }
+
+                    if (analyzeAiButton && emailTextInput) {
+                        analyzeAiButton.addEventListener('click', async () => {
+                            const textToAnalyze = emailTextInput.value;
+                            if (!textToAnalyze.trim()) {
+                                alert('Please paste some text to analyze.');
+                                return;
+                            }
+
+                            analyzeAiButton.disabled = true;
+                            analyzeAiButton.innerHTML = `<div class="loader"></div> <span>Analyzing...</span>`;
+                            document.getElementById('ai-loader').style.display = 'block';
+                            document.getElementById('analysisResult').classList.remove('show');
+
+                            await new Promise(resolve => setTimeout(resolve, 1000));
+
+                            let response = `**Risk Score:** 8/10 (High Risk)
+
+**Summary:** The provided text contains several indicators of a potential phishing attempt, including urgent language, suspicious sender information, and a request for sensitive data.
+
+**Red Flags:**
+* Urgent language ("URGENT", "within 24 hours")
+* Suspicious sender email (not from official domain)
+* Request to verify account details via link
+* Threat of account suspension
+
+**Safety Recommendations:**
+1.  Never click links in suspicious emails.
+2.  Contact the organization directly using official channels to verify the request.
+3.  Check the sender's email address carefully.`;
+
+                            let htmlResponse = response
+                                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                                .replace(/\n\n/g, '</p><p>')
+                                .replace(/\n/g, '<br>')
+                                .replace(/<p><br>/g, '<p>')
+                                .replace(/<strong>(.*?)<\/strong>/g, '<strong>$1</strong><br>')
+                                .replace(/(\* |- ) (.*?)(<br>|$)/g, '<ul style="list-style: disc; margin-left: 1.5rem;"><li>$2</li></ul>')
+                                .replace(/<\/ul><br><ul style="list-style: disc; margin-left: 1.5rem;">/g, '');
+
+                            document.getElementById('resultText').innerHTML = `<p>${htmlResponse}</p>`;
+                            
+                            document.getElementById('analysisResult').classList.add('show');
+                            document.getElementById('ai-loader').style.display = 'none';
+                            analyzeAiButton.disabled = false;
+                            analyzeAiButton.innerHTML = `<i class="fas fa-microscope"></i> <span>Analyze Text</span>`;
+                        });
+                    }
+                }
+            },
+            {
+                id: 2,
+                title: "What is DeepFake?",
+                category: "DeepFake",
+                date: "2025-02-05",
+                thumbnail: "images/deep.jpg",
+                description: "Explore the technology behind synthetic media and its potential misuse.",
+                howItWorks: `<p>Deep learning algorithms, especially Generative Adversarial Networks (GANs), are trained on large datasets of real images, videos, or audio. The generator creates fake content, while the discriminator tries to tell it apart from real content. This process continues until the generator produces highly convincing fakes.</p>
+                             <ul>
+                                 <li>GANs (Generative Adversarial Networks).</li>
+                                 <li>Training on large datasets.</li>
+                                 <li>Highly realistic output.</li>
+                             </ul>`,
+                prevention: `<p>Prevention is challenging, but awareness is key:</p>
+                             <ul>
+                                 <li>Be skeptical of unexpected media.</li>
+                                 <li>Look for inconsistencies (blurriness, lighting).</li>
+                                 <li>Verify the source.</li>
+                                 <li>Use detection tools when available.</li>
+                                 <li>Educate yourself and others.</li>
+                             </ul>`,
+                simulation: `<p>This simulation shows a static example of what a DeepFake video might look like (using a placeholder image). Notice the importance of verifying the source and looking for subtle inconsistencies.</p>
+                             <img id="deepfake-img" src="images/wajah.png" alt="DeepFake Example" style="width: 100%; margin-top: 1rem; border-radius: 4px; border: 1px solid var(--border-color);">`,
+                simulationFunction: function() {
+                    const img = document.getElementById('deepfake-img');
+                    if (img) {
+                        const explanation = document.createElement('p');
+                        explanation.textContent = 'Notice the unnatural artifacts, pixelation around the edges, and inconsistent lighting. These are common artefacts in DeepFakes.';
+                        explanation.style.color = 'var(--accent-primary)';
+                        explanation.style.marginTop = '1rem';
+                        document.getElementById('simulation-content').appendChild(explanation);
+                    }
+                }
+            },
+            {
+                id: 3,
+                title: "RAT & Malware Overview",
+                category: "RAT & Malware",
+                date: "2025-02-10",
+                thumbnail: "images/rat.jpg",
+                description: "Learn how Remote Access Trojans operate and compromise systems.",
+                howItWorks: `<p>RATs are typically installed on a victim's computer without their knowledge, often through phishing emails, malicious downloads, or exploiting vulnerabilities. Once installed, the attacker can control the computer remotely, accessing files, monitoring activity, recording keystrokes, and more.</p>
+                             <ul>
+                                 <li>Installed via phishing or exploits.</li>
+                                 <li>Establishes a backdoor.</li>
+                                 <li>Allows remote control.</li>
+                                 <li>Can steal data or spy.</li>
+                             </ul>`,
+                prevention: `<p>Protect yourself from RATs and malware:</p>
+                             <ul>
+                                 <li>Do not open suspicious attachments.</li>
+                                 <li>Download software only from trusted sources.</li>
+                                 <li>Use a reliable antivirus program.</li>
+                                 <li>Keep your system updated.</li>
+                                 <li>Be cautious with email links.</li>
+                                 <li>Monitor network traffic.</li>
+                             </ul>`,
+                simulation: `<p>This demo simulates a command-line interface showing a system compromised by a RAT. The attacker has gained access and is running commands.</p>
+                             <div class="rat-demo-terminal" id="rat-terminal">
+                                 <div class="output-line">Connecting to target...</div>
+                                 <div class="output-line">Connection established.</div>
+                                 <div class="output-line">Session opened.</div>
+                                 <div class="output-line">Type 'help' for available commands.</div>
+                                 <div class="command-line"><span class="prompt">attacker@server:~$</span> <span id="command-display">ls</span></div>
+                                 <div class="output-line">Documents  Downloads  Pictures  suspicious_file.exe</div>
+                             </div>`,
+                simulationFunction: function() {
+                    const terminal = document.getElementById('rat-terminal');
+                    if (terminal) {
+                        terminal.innerHTML += `
+                            <div class="output-line command-line"><span class="prompt">attacker@server:~$</span> <span id="command-display">cat suspicious_file.exe</span></div>
+                            <div class="output-line">[Binary data detected...]</div>
+                            <div class="output-line command-line"><span class="prompt">attacker@server:~$</span> <span id="command-display">keylog_start</span></div>
+                            <div class="output-line">[Keystroke logging initiated...]</div>
+                            <div class="output-line command-line"><span class="prompt">attacker@server:~$</span> <span id="command-display">screenshot</span></div>
+                            <div class="output-line">[Screenshot captured and sent to C2 server]</div>
+                            <div class="output-line" style="color: red; font-weight: bold;">RAT Activity Detected!</div>
+                            <div class="output-line">The attacker has accessed files, started keylogging, and taken screenshots.</div>
+                        `;
+                    }
+                }
+            }
+        ];
+
+        let currentFilter = 'All';
+        let currentPage = 1;
+        const modulesPerPage = 4;
+        let currentView = 'list';
+
+        function renderModules() {
+            const modulesGrid = document.getElementById('modules-grid');
+            const pagination = document.getElementById('pagination');
+            if(!modulesGrid || !pagination) return;
+            
+            const startIndex = (currentPage - 1) * modulesPerPage;
+            const endIndex = startIndex + modulesPerPage;
+
+            const filteredModules = currentFilter === 'All' ? modules : modules.filter(m => m.category === currentFilter);
+            const modulesToShow = filteredModules.slice(startIndex, endIndex);
+
+            modulesGrid.innerHTML = '';
+
+            modulesToShow.forEach(module => {
+                const moduleElement = document.createElement('div');
+                moduleElement.className = 'module-card';
+                moduleElement.innerHTML = `
+                    <img src="${module.thumbnail}" alt="${module.title}" class="thumbnail">
+                    <div class="module-card-content">
+                        <h3>${module.title}</h3>
+                        <p>${module.description}</p>
+                        <div class="meta">Category: ${module.category} | Date: ${module.date}</div>
+                    </div>
+                    <a href="#" class="read-more" data-id="${module.id}">→</a>
+                `;
+                
+                moduleElement.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showModuleDetail(module);
+                });
+                
+                modulesGrid.appendChild(moduleElement);
+            });
+
+            renderPagination(filteredModules.length);
+        }
+
+        function showModuleDetail(module) {
+             if (typeof module === 'number') {
+                 module = modules.find(m => m.id === module);
+                 if (!module) return;
+             }
+
+             document.getElementById('detail-title').textContent = module.title;
+             document.getElementById('detail-meta').textContent = `Category: ${module.category} | Date: ${module.date}`;
+             document.getElementById('detail-description').innerHTML = `<p>${module.description}</p>`;
+             document.getElementById('detail-how-it-works').innerHTML = module.howItWorks;
+             document.getElementById('detail-prevention').innerHTML = module.prevention;
+             document.getElementById('detail-thumbnail').src = module.thumbnail;
+             document.getElementById('detail-thumbnail').alt = module.title;
+             document.getElementById('detail-thumbnail').style.display = module.thumbnail ? 'block' : 'none';
+
+             const simContainer = document.getElementById('simulation-content');
+             simContainer.innerHTML = '';
+
+             if (module.simulation) {
+                 simContainer.innerHTML = module.simulation;
+                 if (module.simulationFunction) {
+                     setTimeout(module.simulationFunction, 0);
+                 }
+             }
+
+             document.title = `${module.title} - Modules - APU-CYBER-CLUB`;
+             document.body.classList.add('show-detail');
+             currentView = 'detail';
+             window.scrollTo(0, 0);
+
+             document.querySelector('.page-header').style.display = 'none';
+             if(document.querySelector('.filters')) {
+                document.querySelector('.filters').style.display = 'none';
+             }
+        }
+
+        function showModuleList() {
+            document.body.classList.remove('show-detail');
+            currentView = 'list';
+            document.title = 'Modules - APU-CYBER-CLUB';
+            
+            document.querySelector('.page-header').style.display = 'block';
+            if(document.querySelector('.filters')) {
+                document.querySelector('.filters').style.display = 'block';
+            }
+            
+            renderModules();
+        }
+
+        function renderPagination(totalModules) {
+            const pagination = document.getElementById('pagination');
+            if(!pagination) return;
+            const totalPages = Math.ceil(totalModules / modulesPerPage);
+            pagination.innerHTML = '';
+
+            if (totalPages <= 1) return;
+
+            const prevButton = document.createElement('button');
+            prevButton.textContent = 'Previous';
+            prevButton.disabled = currentPage === 1;
+            prevButton.onclick = () => { if (currentPage > 1) { currentPage--; renderModules(); } };
+            pagination.appendChild(prevButton);
+
+            for (let i = 1; i <= totalPages; i++) {
+                const pageButton = document.createElement('button');
+                pageButton.textContent = i;
+                pageButton.className = i === currentPage ? 'active' : '';
+                pageButton.onclick = () => { currentPage = i; renderModules(); };
+                pagination.appendChild(pageButton);
+            }
+
+            const nextButton = document.createElement('button');
+            nextButton.textContent = 'Next';
+            nextButton.disabled = currentPage === totalPages || totalPages === 0;
+            nextButton.onclick = () => { if (currentPage < totalPages) { currentPage++; renderModules(); } };
+            pagination.appendChild(nextButton);
+        }
+
+        document.querySelectorAll('.filter-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelector('.filter-btn.active').classList.remove('active');
+                button.classList.add('active');
+                currentFilter = button.getAttribute('data-category');
+                currentPage = 1;
+                renderModules();
+            });
+        });
+
+        document.getElementById('back-to-modules-btn').addEventListener('click', showModuleList);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderModules();
+        });
+    </script>
+    
+    <script>
+        class ThemeManager {
+          constructor() {
+            this.theme = localStorage.getItem('theme') || 'light';
+            this.init();
+          }
+          
+          init() {
+            this.applyTheme();
+            this.bindEvents();
+          }
+          
+          applyTheme() {
+            document.documentElement.setAttribute('data-theme', this.theme);
+            this.updateThemeIcon();
+          }
+          
+          updateThemeIcon() {
+            const themeIcons = document.querySelectorAll('.theme-icon');
+            themeIcons.forEach(icon => {
+              icon.textContent = this.theme === 'dark' ? '☀️' : '🌙';
+            });
+          }
+          
+          toggleTheme() {
+            this.theme = this.theme === 'dark' ? 'light' : 'dark';
+            localStorage.setItem('theme', this.theme);
+            this.applyTheme();
+          }
+          
+          bindEvents() {
+            const themeToggles = document.querySelectorAll('#theme-toggle');
+            themeToggles.forEach(toggle => {
+              toggle.addEventListener('click', () => this.toggleTheme());
+            });
+          }
+        }
+
+        class NavigationManager {
+          constructor() {
+            this.init();
+          }
+          
+          init() {
+            this.setActiveNavLink();
+            this.bindEvents();
+          }
+          
+          setActiveNavLink() {
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            navLinks.forEach(link => {
+              link.classList.remove('active');
+              const href = link.getAttribute('href');
+              if (href === currentPage || (currentPage === '' && href === 'index.html')) {
+                link.classList.add('active');
+              }
+            });
+          }
+          
+          bindEvents() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+              anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                  target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                  });
+                }
+              });
+            });
+          }
+        }
+
+        class AnimationManager {
+          constructor() {
+            this.init();
+          }
+          
+          init() {
+            this.observeElements();
+            this.addHoverEffects();
+          }
+          
+          observeElements() {
+            const observer = new IntersectionObserver((entries) => {
+              entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                  entry.target.style.opacity = '1';
+                  entry.target.style.transform = 'translateY(0)';
+                }
+              });
+            }, { threshold: 0.1 });
+            
+            const animatedElements = document.querySelectorAll('.feature-card, .course-card, .team-card, .stat-card, .module-card');
+            animatedElements.forEach(el => {
+              el.style.opacity = '0';
+              el.style.transform = 'translateY(20px)';
+              el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+              observer.observe(el);
+            });
+          }
+          
+          addHoverEffects() {
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(btn => {
+              btn.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px)';
+              });
+              
+              btn.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+              });
+            });
+          }
+        }
+
+        const utils = {
+          debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+              const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+              };
+              clearTimeout(timeout);
+              timeout = setTimeout(later, wait);
+            };
+          },
+          
+          formatNumber(num) {
+            return num.toLocaleString();
+          },
+          
+          scrollToElement(element) {
+            element.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+          new ThemeManager();
+          new NavigationManager();
+          new AnimationManager();
+          
+          window.addEventListener('load', function() {
+            document.body.classList.add('loaded');
+          });
+          
+          let lastScrollTop = 0;
+          const navbar = document.querySelector('.navbar');
+          
+          window.addEventListener('scroll', utils.debounce(function() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (scrollTop > 100) {
+              navbar.style.boxShadow = 'var(--shadow-medium)';
+            } else {
+              navbar.style.boxShadow = 'none';
+            }
+            
+            lastScrollTop = scrollTop;
+          }, 10));
+          
+          document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+              const ripple = document.createElement('span');
+              const rect = this.getBoundingClientRect();
+              const size = Math.max(rect.width, rect.height);
+              const x = e.clientX - rect.left - size / 2;
+              const y = e.clientY - rect.top - size / 2;
+              
+              ripple.style.width = ripple.style.height = size + 'px';
+              ripple.style.left = x + 'px';
+              ripple.style.top = y + 'px';
+              ripple.classList.add('ripple');
+              
+              this.appendChild(ripple);
+              
+              setTimeout(() => {
+                ripple.remove();
+              }, 600);
+            });
+          });
+        });
+
+        const style = document.createElement('style');
+        style.textContent = `
+            .btn {
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .ripple {
+                position: absolute;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.3);
+                transform: scale(0);
+                animation: ripple-animation 0.6s linear;
+                pointer-events: none;
+            }
+            
+            @keyframes ripple-animation {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+            
+            .loaded {
+                opacity: 1;
+            }
+            
+            body:not(.loaded) {
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+        `;
+        document.head.appendChild(style);
+        //loading animation
+window.addEventListener("load", function() {
+    const loader = document.getElementById("loader");
+
+    // Minimum display time (in milliseconds)
+    const MIN_TIME = 1200; // 3.2 seconds
+
+    const start = performance.timing.navigationStart;
+    const end = Date.now();
+    const loadTime = end - start;
+
+    // If page loaded too fast, delay hiding
+    const delay = Math.max(0, MIN_TIME - loadTime);
+
+    setTimeout(() => {
+        loader.style.opacity = "0";
+        loader.style.transition = "opacity 0.5s ease";
+        setTimeout(() => loader.style.display = "none", 500);
+    }, delay);
+});
+    </script>
+</body>
+</html>

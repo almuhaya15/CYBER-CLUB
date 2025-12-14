@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - APU-CYBER-CLUB</title>
+    <meta name="description" content="Read our latest articles and insights on hacking, cybersecurity, and ethical hacking practices.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            transition: all 0.3s ease;
+        }
+
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #f1f5f9;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --text-tertiary-color: var(--text-muted);
+            --text-muted: #94a3b8;
+            --accent-primary: #3b82f6;
+            --primary-color: var(--accent-primary);
+            --accent-hover: #2563eb;
+            --primary-hover-color: var(--accent-hover);
+            --accent-light: #dbeafe;
+            --border-color: #e2e8f0;
+            --card-bg: var(--bg-primary);
+            --shadow-light: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            --shadow-medium: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-large: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --text-primary: #f8fafc;
+            --text-color: var(--text-primary);
+            --text-secondary: #cbd5e1;
+            --text-secondary-color: var(--text-secondary);
+            --text-muted: #94a3b8;
+            --text-tertiary-color: var(--text-muted);
+            --accent-primary: #60a5fa;
+            --primary-color: var(--accent-primary);
+            --accent-hover: #3b82f6;
+            --primary-hover-color: var(--accent-hover);
+            --accent-light: #1e3a8a;
+            --border-color: #475569;
+            --card-bg: var(--bg-secondary);
+            --shadow-light: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+            --shadow-medium: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+            --shadow-large: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .navbar {
+            background: var(--bg-primary);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            background-color: rgba(var(--bg-primary-rgb, 255, 255, 255), 0.85);
+            height: 84px;
+            display: flex;
+            align-items: center;
+        }
+        
+        [data-theme="dark"] .navbar {
+             background-color: rgba(15, 23, 42, 0.85);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .logo {
+            width: 77px;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s ease, transform 0.3s ease;
+            position: relative;
+            padding: 0.25rem 0;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--accent-primary);
+            transform: translateY(-2px);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -0.3rem;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--accent-primary);
+            border-radius: 2px;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 0.4rem 0.6rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle:hover {
+            background: var(--bg-secondary);
+            transform: scale(1.05);
+        }
+
+        .theme-icon {
+            font-size: 1.1rem;
+        }
+
+        #menu-toggle {
+            display: none;
+        }
+
+        .menu-icon {
+            display: none;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .menu-icon span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: var(--text-primary);
+            margin: 5px;
+            border-radius: 2px;
+            transition: all 0.3s ease-in-out;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            text-align: center;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background: var(--accent-primary);
+            color: white;
+            box-shadow: var(--shadow-medium);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-large);
+        }
+
+        .btn-full {
+            width: 100%;
+        }
+
+        .page-header {
+            padding: 5rem 0;
+            text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)),
+                        url('images/classroom-apu.webp');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: #fff;
+        }
+
+        .page-title {
+            font-size: clamp(2.5rem, 6vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+        
+        .page-header .page-title {
+             color: #fff;
+        }
+
+        .page-description {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 42rem;
+            margin: 0 auto;
+        }
+        
+        .page-header .page-description {
+             color: rgba(255,255,255,0.9);
+        }
+
+        .footer {
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            padding: 3rem 0 1.5rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.875rem;
+        }
+
+        .footer a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer a:hover {
+            color: var(--accent-primary);
+        }
+
+        .footer-top {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-brand {
+            max-width: 280px;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .footer-logo {
+            width: 50px;
+            height: auto;
+        }
+
+        .footer-brand-text {
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: var(--text-primary);
+        }
+
+        .footer-description {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-section h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .footer-icons {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .footer-icons img {
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
+            filter: grayscale(60%);
+            transition: filter 0.2s ease;
+        }
+        
+        [data-theme="dark"] .footer-icons img {
+            filter: brightness(0) invert(1);
+        }
+
+        .footer-icons img:hover {
+            filter: none;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            padding-top: 1rem;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .filters {
+            padding: 2rem 0;
+            background: var(--bg-primary);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1.5rem;
+            border: 1px solid var(--border-color);
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+
+        .courses {
+            padding: 4rem 0;
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        @media (max-width: 992px) {
+            .menu-icon {
+                display: block;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 84px;
+                left: 0;
+                width: 100%;
+                flex-direction: column;
+                background-color: var(--bg-primary);
+                border-bottom: 1px solid var(--border-color);
+                padding: 1rem 0;
+                gap: 0;
+                transform: translateY(-120%);
+                transition: transform 0.4s ease-in-out, box-shadow 0.4s ease;
+                box-shadow: none;
+                z-index: 99;
+            }
+
+            .nav-link {
+                padding: 1rem 1.5rem;
+                width: 100%;
+                text-align: center;
+            }
+            
+            .nav-link:hover,
+            .nav-link.active {
+                transform: translateY(0);
+                background-color: var(--bg-secondary);
+            }
+            
+            .nav-link.active::after {
+                display: none;
+            }
+
+            .theme-toggle {
+                margin: 0.5rem 1.5rem;
+                align-self: center;
+            }
+
+            #menu-toggle:checked ~ .nav-links {
+                transform: translateY(0);
+                box-shadow: var(--shadow-medium);
+            }
+
+            #menu-toggle:checked + .menu-icon span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+            #menu-toggle:checked + .menu-icon span:nth-child(2) {
+                opacity: 0;
+            }
+            #menu-toggle:checked + .menu-icon span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -6px);
+            }
+            
+            .footer-top {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .filter-buttons {
+                gap: 0.5rem;
+            }
+
+            .filter-btn {
+                padding: 0.375rem 1rem;
+                font-size: 0.875rem;
+            }
+            
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (min-width: 993px) {
+            .nav-links {
+                display: flex !important;
+            }
+        }
+        
+        .blog-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-medium);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            margin-bottom: 1.5rem;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-large);
+        }
+
+        .blog-card h3 {
+            color: var(--text-primary);
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .blog-card .meta {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .read-more {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .read-more:hover {
+            text-decoration: underline;
+        }
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 2.5rem;
+}
+
+.pagination button {
+    background: var(--bg-secondary);
+    border: none;
+    color: var(--text-primary);
+    padding: 0.55rem 0.9rem;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: var(--shadow-light);
+    transition: all 0.25s ease;
+}
+
+.pagination button:hover:not(.active):not(.disabled) {
+    background: var(--accent-primary);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.pagination button.active {
+    background: var(--accent-primary);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+}
+
+.pagination button.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+
+        .thumbnail {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+
+        .article-header {
+            margin-bottom: 1.5rem;
+        }
+        .article-meta {
+            font-size: 0.9rem;
+            color: var(--text-tertiary-color);
+            margin-bottom: 1rem;
+        }
+        .article-content {
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+        .article-content p {
+            margin-bottom: 1rem;
+        }
+        .article-content h2 {
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.25rem;
+        }
+        .article-content ul, .article-content ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .article-content li {
+            margin-bottom: 0.5rem;
+        }
+        .back-to-blog {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            border-radius: 4px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 1.5rem;
+            border: none;
+            cursor: pointer;
+        }
+        .back-to-blog:hover {
+            background-color: var(--primary-hover-color);
+            text-decoration: none;
+            transform: translateY(-2px);
+        }
+        .back-to-blog i {
+            margin-right: 0.5rem;
+        }
+        .article-thumbnail {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .article-detail {
+            display: none;
+        }
+        .blog-container {
+            display: block;
+        }
+
+        .show-article .article-detail {
+            display: block;
+        }
+        .show-article .blog-container {
+            display: none;
+        }
+        
+        .article-detail .page-header {
+            background: var(--bg-secondary);
+        }
+        
+        .article-detail .page-header .page-title,
+        .article-detail .page-header .article-meta {
+            color: var(--text-primary);
+        }
+        
+        [data-theme="dark"] .article-detail .page-header {
+             background: var(--bg-secondary);
+        }
+        
+        [data-theme="dark"] .article-detail .page-header .page-title,
+        [data-theme="dark"] .article-detail .page-header .article-meta {
+            color: var(--text-primary);
+        }
+            #loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #0a0f1a, #001f3f, #003366);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* stays on top */
+}
+    </style>
+</head>
+<body class="">
+    <div id="loader">
+          <img src="images/tech startup.gif" alt="loading animation" />
+      </div>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <img src="images/apu-logo.png" alt="APU Logo" class="logo">
+            </div>
+            
+            <input type="checkbox" id="menu-toggle">
+            <label for="menu-toggle" class="menu-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
+            
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="activities.html" class="nav-link">Activity</a>
+                <a href="courses.html" class="nav-link">Events</a>
+                <a href="tools.html" class="nav-link">Tools</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="my-acc.html" class="nav-link">Account</a>
+                <a href="blog.html" class="nav-link active">Blog</a>
+                <a href="modules.html" class="nav-link">Modules</a>
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+                    <span class="theme-icon">🌙</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <section class="page-header blog-header">
+        <div class="container">
+            <h1 class="page-title">Blog</h1>
+            <p class="page-description">
+                Read our latest articles and insights on hacking, cybersecurity, and ethical hacking practices.
+            </p>
+        </div>
+    </section>
+
+    <section class="page-header article-header" style="display: none;">
+        <div class="container">
+            <h1 class="page-title" id="article-page-title">Loading Article...</h1>
+            <div class="article-meta" id="article-meta">Loading...</div>
+        </div>
+    </section>
+
+    <div class="blog-container">
+        <section class="filters blog-filters">
+            <div class="container">
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-category="All">All</button>
+                    <button class="filter-btn" data-category="Ethical Hacking">Ethical Hacking</button>
+                    <button class="filter-btn" data-category="Cybersecurity">Cybersecurity</button>
+                    <button class="filter-btn" data-category="Malware">Malware</button>
+                    <button class="filter-btn" data-category="Social Engineering">Social Engineering</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="courses">
+            <div class="container">
+                <div class="courses-grid" id="blog-grid">
+                </div>
+                <div class="pagination" id="pagination"></div>
+            </div>
+        </section>
+    </div>
+
+    <div class="article-detail">
+        <section class="article-section courses">
+            <div class="container">
+                <article class="article-content-wrapper">
+                    <img id="article-thumbnail" class="article-thumbnail" src="images/etikal.jpg" alt="Article Thumbnail" style="display: none;">
+                    <div class="article-content" id="article-content">
+                    </div>
+                    <button id="back-to-blog-btn" class="back-to-blog">
+                        <i class="fas fa-arrow-left"></i>
+                        Back to Blog
+                    </button>
+                </article>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <div class="container footer-top">
+            <div class="footer-brand">
+                <img src="images/logo.png" alt="APU Logo" class="footer-logo">
+                <span class="footer-brand-text">APU-CYBER-CLUB</span>
+                <p class="footer-description">
+                    Empowering learners worldwide with cutting-edge education and practical skills.
+                </p>
+            </div>
+
+            <div class="footer-links">
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="courses.html">Event</a></li>
+                        <li><a href="tools.html">Tools</a></li>
+                        <li><a href="about.html">About</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                      <li><a href="blog.html">Blog</a></li>
+                      <li><a href="modules.html">Modules</a></li>
+                      <li><a href="faq.html">FAQ</a></li>
+                      <li><a href="#">Support</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="/terms.html">Terms & Conditions</a></li>
+                        <li><a href="/privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <div class="footer-icons">
+                        <a href="https://share.google/yN5tUcceP5J6FSXSu"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook"></a>
+                        <a href="https://x.com/AsiaPacificU?t=HVzU0WvPy2al_yvAiaVZw&s=09"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/twitter.svg" alt="Twitter"></a>
+                        <a href="https://www.instagram.com/asiapacificuniversity?igsh=dHhtaXdqZmEyaGg0"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram"></a>
+                        <a href="https://www.linkedin.com/school/apumalaysia/"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 APU-CYBER-CLUB. All rights reserved. | Final Year Project</p>
+        </div>
+    </footer>
+    
+    <script>
+        const blogArticles = [
+            {
+                id: 1,
+                title: "Introduction to Ethical Hacking",
+                excerpt: "Learn the basics of ethical hacking, its importance, and the common methodologies used by security professionals.",
+                category: "Ethical Hacking",
+                date: "2025-01-15",
+                content: `<p>Ethical hacking, also known as penetration testing or white-hat hacking, involves an authorized attempt to gain unauthorized access to a computer system, application, or data. Carried out by ethical hackers, these security assessments help identify vulnerabilities that malicious hackers could exploit.</p>
+                <h2>Why is Ethical Hacking Important?</h2>
+                <p>In today's digital landscape, cybersecurity threats are increasingly sophisticated. Organizations need proactive measures to secure their assets. Ethical hacking provides a simulated attack environment to test defenses before real attackers can exploit weaknesses.</p>
+                <h2>Common Methodologies</h2>
+                <p>Ethical hackers follow structured methodologies such as the Penetration Testing Execution Standard (PTES) or Open Source Security Testing Methodology Manual (OSSTMM). These typically include phases like reconnaissance, scanning, gaining access, maintaining access, and covering tracks.</p>
+                <h2>Career Paths in Ethical Hacking</h2>
+                <p>A career in ethical hacking can lead to roles such as Penetration Tester, Security Analyst, or Information Security Consultant. Essential skills include networking, operating systems knowledge, and proficiency in security tools.</p>`,
+                thumbnail: "images/etikal.jpg"
+            },
+            {
+                id: 2,
+                title: "Understanding Cybersecurity Threats",
+                excerpt: "Explore the different types of cybersecurity threats and how organizations can protect themselves.",
+                category: "Cybersecurity",
+                date: "2025-01-10",
+                content: `<p>Cybersecurity threats are constantly evolving, ranging from phishing attacks and ransomware to advanced persistent threats (APTs). This comprehensive guide breaks down the most common threats, their impact, and essential defense strategies for individuals and businesses.</p>
+                <h2>Common Threat Types</h2>
+                <ul>
+                    <li><strong>Malware:</strong> Malicious software like viruses, worms, trojans, and spyware.</li>
+                    <li><strong>Phishing:</strong> Deceptive emails or messages designed to steal credentials.</li>
+                    <li><strong>Ransomware:</strong> Malware that encrypts data and demands payment for decryption.</li>
+                    <li><strong>DDoS:</strong> Distributed Denial of Service attacks that overwhelm systems.</li>
+                </ul>
+                <h2>Impact of Cyber Threats</h2>
+                <p>The consequences can be severe, including data breaches, financial losses, reputation damage, and operational downtime.</p>
+                <h2>Essential Defense Strategies</h2>
+                <p>Effective defenses include regular software updates, strong password policies, multi-factor authentication, employee training, and robust firewall/antivirus solutions.</p>`,
+                thumbnail: "images/cyber.jpg"
+            },
+            {
+                id: 3,
+                title: "The Dark Side: Social Engineering Explained",
+                excerpt: "Discover how social engineering manipulates people into revealing sensitive information.",
+                category: "Social Engineering",
+                date: "2025-01-05",
+                content: `<p>Social engineering relies on psychological manipulation rather than technical exploits. Attackers trick individuals into divulging confidential information or performing actions that compromise security. Learn about common techniques like phishing, pretexting, and baiting, and how to recognize and defend against them.</p>
+                <h2>Common Techniques</h2>
+                <ul>
+                    <li><strong>Phishing:</strong> Fraudulent emails or messages mimicking trusted entities.</li>
+                    <li><strong>Pretexting:</strong> Creating a fabricated scenario to gain trust and information.</li>
+                    <li><strong>Baiting:</strong> Offering something enticing to trigger a desired response.</li>
+                    <li><strong>Tailgating:</strong> Following an authorized person into a restricted area.</li>
+                </ul>
+                <h2>How to Recognize Social Engineering</h2>
+                <p>Be wary of unexpected requests for sensitive information, pressure to act quickly, and verification methods that seem off.</p>
+                <h2>Defensive Measures</h2>
+                <p>Employee awareness training, strict verification procedures, and clear policies on information sharing are crucial.</p>`,
+                thumbnail: "images/social.jpg"
+            },
+            {
+                id: 4,
+                title: "Malware Analysis: A Deep Dive",
+                excerpt: "An overview of malware analysis techniques used to understand malicious software behavior.",
+                category: "Malware",
+                date: "2024-12-28",
+                content: `<p>Malware analysis is a critical skill for cybersecurity professionals. It involves examining malicious software to understand its functionality, origin, and potential impact. This article explores static and dynamic analysis methods, tools, and the importance of reverse engineering in threat intelligence.</p>
+                <h2>Static Analysis</h2>
+                <p>This involves examining the malware's code without executing it, looking at file properties, strings, and disassembled code.</p>
+                <h2>Dynamic Analysis</h2>
+                <p>This involves running the malware in a controlled environment (like a sandbox) to observe its behavior.</p>
+                <h2>Tools and Techniques</h2>
+                <p>Common tools include IDA Pro, OllyDbg, Wireshark, and Cuckoo Sandbox. Reverse engineering is often a key component.</p>
+                <h2>Importance in Threat Intelligence</h2>
+                <p>Analysis helps identify Indicators of Compromise (IoCs), understand attack vectors, and develop countermeasures.</p>`,
+                thumbnail: "images/malware.jpg"
+            },
+            {
+                id: 5,
+                title: "OWASP Top 10 Vulnerabilities",
+                excerpt: "A look at the ten most critical web application security risks according to OWASP.",
+                category: "Cybersecurity",
+                date: "2024-12-20",
+                content: `<p>The Open Web Application Security Project (OWASP) maintains a list of the most significant web application security risks. Understanding these vulnerabilities, such as Injection, Broken Authentication, and Sensitive Data Exposure, is crucial for developers and security teams to build secure applications.</p>
+                <h2>Top 10 Risks (Example List)</h2>
+                <ol>
+                    <li>Injection (e.g., SQL Injection)</li>
+                    <li>Broken Authentication</li>
+                    <li>Sensitive Data Exposure</li>
+                    <li>XML External Entities (XXE)</li>
+                    <li>Broken Access Control</li>
+                    <li>Security Misconfigurations</li>
+                    <li>Cross-Site Scripting (XSS)</li>
+                    <li>Insecure Deserialization</li>
+                    <li>Using Components with Known Vulnerabilities</li>
+                    <li>Insufficient Logging & Monitoring</li>
+                </ol>
+                <h2>Impact of OWASP Top 10</h2>
+                <p>These vulnerabilities are common and can lead to data breaches, system compromise, and financial loss.</p>
+                <h2>Prevention Strategies</h2>
+                <p>Implement secure coding practices, input validation, proper authentication/authorization, encryption, and regular security testing.</p>`,
+                thumbnail: "images/owasp.jpg"
+            },
+            {
+                id: 6,
+                title: "Penetration Testing: The Complete Guide",
+                excerpt: "A step-by-step guide to the penetration testing process.",
+                category: "Ethical Hacking",
+                date: "2024-12-15",
+                content: `<p>Penetration testing simulates a real-world attack to find and exploit security weaknesses. This guide outlines the phases of a typical pen test: reconnaissance, scanning, gaining access, maintaining access, and covering tracks. It also covers reporting and remediation.</p>
+                <h2>Phases of Penetration Testing</h2>
+                <ol>
+                    <li><strong>Reconnaissance:</strong> Gathering information about the target.</li>
+                    <li><strong>Scanning:</strong> Identifying live hosts, open ports, and services.</li>
+                    <li><strong>Gaining Access:</strong> Exploiting vulnerabilities to gain initial access.</li>
+                    <li><strong>Maintaining Access:</strong> Ensuring continued access for deeper analysis.</li>
+                    <li><strong>Covering Tracks:</strong> Removing evidence of the test.</li>
+                </ol>
+                <h2>Reporting</h2>
+                <p>A detailed report is crucial, outlining vulnerabilities found, their risk level, proof-of-concept, and recommended fixes.</p>
+                <h2>Remediation</h2>
+                <p>Organizations must address the vulnerabilities identified during the test to improve their security posture.</p>`,
+                thumbnail: "images/testing.jpg"
+            },
+            {
+                id: 7,
+                title: "The Rise of Ransomware",
+                excerpt: "How ransomware attacks are becoming more sophisticated and prevalent.",
+                category: "Malware",
+                date: "2024-12-10",
+                content: `<p>Ransomware has become one of the most feared cyberattacks, encrypting victims' data and demanding payment for the decryption key. This article discusses the evolution of ransomware, attack vectors, and strategies for prevention and recovery.</p>
+                <h2>Evolution of Ransomware</h2>
+                <p>Ransomware has evolved from simple file encryption to sophisticated attacks involving data exfiltration and double extortion.</p>
+                <h2>Common Attack Vectors</h2>
+                <p>Phishing emails, unpatched software vulnerabilities, and compromised Remote Desktop Protocol (RDP) are common entry points.</p>
+                <h2>Prevention and Recovery Strategies</h2>
+                <p>Key strategies include regular backups, network segmentation, endpoint protection, and employee training.</p>`,
+                thumbnail: "images/ramsom.jpg"
+            },
+            {
+                id: 8,
+                title: "Phishing: The Art of Deception",
+                excerpt: "Understanding the common tactics used in phishing emails and how to avoid them.",
+                category: "Social Engineering",
+                date: "2024-12-05",
+                content: `<p>Phishing remains one of the most common attack vectors. Cybercriminals craft convincing emails or messages to steal credentials or install malware. Learn how to spot red flags, verify sender authenticity, and implement email security best practices.</p>
+                <h2>Common Phishing Tactics</h2>
+                <ul>
+                    <li>Urgent or threatening language.</li>
+                    <li>Generic greetings (e.g., "Dear Customer").</li>
+                    <li>Suspicious links or attachments.</li>
+                    <li>Sender email addresses that mimic legitimate ones.</li>
+                </ul>
+                <h2>How to Spot Phishing</h2>
+                <p>Look for spelling errors, check the URL before clicking, verify the request independently, and be suspicious of unexpected emails.</p>
+                <h2>Email Security Best Practices</h2>
+                <p>Use spam filters, implement DMARC, SPF, and DKIM protocols, and provide regular security awareness training.</p>`,
+                thumbnail: "images/phising.jpg"
+            }
+        ];
+
+        let currentFilter = 'All';
+        let currentPage = 1;
+        const articlesPerPage = 6;
+        let currentView = 'blog';
+
+        function renderBlogArticles() {
+            const blogGrid = document.getElementById('blog-grid');
+            if(!blogGrid) return;
+            
+            const startIndex = (currentPage - 1) * articlesPerPage;
+            const endIndex = startIndex + articlesPerPage;
+
+            const filteredArticles = currentFilter === 'All' ? blogArticles : blogArticles.filter(article => article.category === currentFilter);
+            const articlesToShow = filteredArticles.slice(startIndex, endIndex);
+
+            blogGrid.innerHTML = '';
+
+            articlesToShow.forEach(article => {
+                const articleElement = document.createElement('div');
+                articleElement.className = 'blog-card';
+                articleElement.onclick = () => showArticleDetail(article);
+                articleElement.innerHTML = `
+                    <img src="${article.thumbnail}" alt="${article.title}" class="thumbnail">
+                    <h3>${article.title}</h3>
+                    <div class="meta">Category: ${article.category} | Date: ${article.date}</div>
+                    <p>${article.excerpt}</p>
+                    <a href="#" class="read-more" onclick="showArticleDetailFromLink(event, ${article.id}); return false;">Read More</a>
+                `;
+                blogGrid.appendChild(articleElement);
+            });
+
+            renderPagination(filteredArticles.length);
+        }
+
+        function showArticleDetail(articleObj) {
+             if (!articleObj) {
+                 return;
+             }
+
+             document.getElementById('article-page-title').textContent = articleObj.title;
+             document.getElementById('article-meta').textContent = `Category: ${articleObj.category} | Date: ${articleObj.date}`;
+             document.getElementById('article-content').innerHTML = articleObj.content;
+             document.getElementById('article-thumbnail').src = articleObj.thumbnail;
+             document.getElementById('article-thumbnail').alt = articleObj.title;
+             document.getElementById('article-thumbnail').style.display = articleObj.thumbnail ? 'block' : 'none';
+
+             document.title = `${articleObj.title} - APU-CYBER-CLUB`;
+
+             document.body.classList.add('show-article');
+             currentView = 'article';
+
+             window.scrollTo(0, 0);
+
+             document.querySelector('.blog-header').style.display = 'none';
+             document.querySelector('.article-header').style.display = 'block';
+             document.querySelector('.blog-filters').style.display = 'none';
+        }
+
+        function showArticleDetailFromLink(event, id) {
+             event.preventDefault();
+             const article = blogArticles.find(a => a.id === id);
+             if (article) {
+                 showArticleDetail(article);
+             }
+        }
+
+        function showBlogList() {
+            document.body.classList.remove('show-article');
+            currentView = 'blog';
+
+            document.title = 'Blog - APU-CYBER-CLUB';
+
+            document.querySelector('.blog-header').style.display = 'block';
+            document.querySelector('.article-header').style.display = 'none';
+            document.querySelector('.blog-filters').style.display = 'block';
+
+             renderBlogArticles();
+        }
+
+        function renderPagination(totalArticles) {
+            const pagination = document.getElementById('pagination');
+            if(!pagination) return;
+            
+            const totalPages = Math.ceil(totalArticles / articlesPerPage);
+
+            pagination.innerHTML = '';
+
+            const prevButton = document.createElement('button');
+            prevButton.textContent = '❮❮❮❮';
+            prevButton.disabled = currentPage === 1;
+            prevButton.onclick = () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderBlogArticles();
+                }
+            };
+            pagination.appendChild(prevButton);
+
+            for (let i = 1; i <= totalPages; i++) {
+                const pageButton = document.createElement('button');
+                pageButton.textContent = i;
+                pageButton.className = i === currentPage ? 'active' : '';
+                pageButton.onclick = () => {
+                    currentPage = i;
+                    renderBlogArticles();
+                };
+                pagination.appendChild(pageButton);
+            }
+
+            const nextButton = document.createElement('button');
+            nextButton.textContent = '❯❯❯❯';
+            nextButton.disabled = currentPage === totalPages || totalPages === 0;
+            nextButton.onclick = () => {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    renderBlogArticles();
+                }
+            };
+            pagination.appendChild(nextButton);
+        }
+
+        document.querySelectorAll('.filter-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelector('.filter-btn.active').classList.remove('active');
+                button.classList.add('active');
+                currentFilter = button.getAttribute('data-category');
+                currentPage = 1;
+                renderBlogArticles();
+            });
+        });
+
+        document.getElementById('back-to-blog-btn').addEventListener('click', showBlogList);
+    </script>
+
+    <script>
+        class ThemeManager {
+          constructor() {
+            this.theme = localStorage.getItem('theme') || 'light';
+            this.init();
+          }
+          
+          init() {
+            this.applyTheme();
+            this.bindEvents();
+          }
+          
+          applyTheme() {
+            document.documentElement.setAttribute('data-theme', this.theme);
+            this.updateThemeIcon();
+          }
+          
+          updateThemeIcon() {
+            const themeIcons = document.querySelectorAll('.theme-icon');
+            themeIcons.forEach(icon => {
+              icon.textContent = this.theme === 'dark' ? '☀️' : '🌙';
+            });
+          }
+          
+          toggleTheme() {
+            this.theme = this.theme === 'dark' ? 'light' : 'dark';
+            localStorage.setItem('theme', this.theme);
+            this.applyTheme();
+          }
+          
+          bindEvents() {
+            const themeToggles = document.querySelectorAll('#theme-toggle');
+            themeToggles.forEach(toggle => {
+              toggle.addEventListener('click', () => this.toggleTheme());
+            });
+          }
+        }
+
+        class NavigationManager {
+          constructor() {
+            this.init();
+          }
+          
+          init() {
+            this.setActiveNavLink();
+            this.bindEvents();
+          }
+          
+          setActiveNavLink() {
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            navLinks.forEach(link => {
+              link.classList.remove('active');
+              const href = link.getAttribute('href');
+              if (href === currentPage || (currentPage === '' && href === 'index.html')) {
+                link.classList.add('active');
+              }
+            });
+          }
+          
+          bindEvents() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+              anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                  target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                  });
+                }
+              });
+            });
+          }
+        }
+
+        class AnimationManager {
+          constructor() {
+            this.init();
+          }
+          
+          init() {
+            this.observeElements();
+            this.addHoverEffects();
+          }
+          
+          observeElements() {
+            const observer = new IntersectionObserver((entries) => {
+              entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                  entry.target.style.opacity = '1';
+                  entry.target.style.transform = 'translateY(0)';
+                }
+              });
+            }, { threshold: 0.1 });
+            
+            const animatedElements = document.querySelectorAll('.feature-card, .course-card, .team-card, .stat-card, .blog-card');
+            animatedElements.forEach(el => {
+              el.style.opacity = '0';
+              el.style.transform = 'translateY(20px)';
+              el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+              observer.observe(el);
+            });
+          }
+          
+          addHoverEffects() {
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(btn => {
+              btn.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px)';
+              });
+              
+              btn.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+              });
+            });
+          }
+        }
+
+        const utils = {
+          debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+              const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+              };
+              clearTimeout(timeout);
+              timeout = setTimeout(later, wait);
+            };
+          },
+          
+          formatNumber(num) {
+            return num.toLocaleString();
+          },
+          
+          scrollToElement(element) {
+            element.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+          new ThemeManager();
+          new NavigationManager();
+          new AnimationManager();
+          
+          renderBlogArticles();
+          
+          window.addEventListener('load', function() {
+            document.body.classList.add('loaded');
+          });
+          
+          let lastScrollTop = 0;
+          const navbar = document.querySelector('.navbar');
+          
+          window.addEventListener('scroll', utils.debounce(function() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (scrollTop > 100) {
+              navbar.style.boxShadow = 'var(--shadow-medium)';
+            } else {
+              navbar.style.boxShadow = 'none';
+            }
+            
+            lastScrollTop = scrollTop;
+          }, 10));
+          
+          document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+              const ripple = document.createElement('span');
+              const rect = this.getBoundingClientRect();
+              const size = Math.max(rect.width, rect.height);
+              const x = e.clientX - rect.left - size / 2;
+              const y = e.clientY - rect.top - size / 2;
+              
+              ripple.style.width = ripple.style.height = size + 'px';
+              ripple.style.left = x + 'px';
+              ripple.style.top = y + 'px';
+              ripple.classList.add('ripple');
+              
+              this.appendChild(ripple);
+              
+              setTimeout(() => {
+                ripple.remove();
+              }, 600);
+            });
+          });
+        });
+
+        const style = document.createElement('style');
+        style.textContent = `
+            .btn {
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .ripple {
+                position: absolute;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.3);
+                transform: scale(0);
+                animation: ripple-animation 0.6s linear;
+                pointer-events: none;
+            }
+            
+            @keyframes ripple-animation {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+            
+            .loaded {
+                opacity: 1;
+            }
+            
+            body:not(.loaded) {
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+        `;
+        document.head.appendChild(style);
+        //loading animation
+window.addEventListener("load", function() {
+    const loader = document.getElementById("loader");
+
+    // Minimum display time (in milliseconds)
+    const MIN_TIME = 1200; // 3.2 seconds
+
+    const start = performance.timing.navigationStart;
+    const end = Date.now();
+    const loadTime = end - start;
+
+    // If page loaded too fast, delay hiding
+    const delay = Math.max(0, MIN_TIME - loadTime);
+
+    setTimeout(() => {
+        loader.style.opacity = "0";
+        loader.style.transition = "opacity 0.5s ease";
+        setTimeout(() => loader.style.display = "none", 500);
+    }, delay);
+});
+    </script>
+</body>
+</html>

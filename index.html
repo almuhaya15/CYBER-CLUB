@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APU-CYBER-CLUB</title>
+    <meta name="description" content="Master the skills that matter with our comprehensive educational platform. From beginner to advanced, we've got you covered.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            transition: all 0.3s ease;
+        }
+
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #f1f5f9;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --text-muted: #94a3b8;
+            --accent-primary: #3b82f6;
+            --accent-hover: #2563eb;
+            --accent-light: #dbeafe;
+            --border-color: #e2e8f0;
+            --shadow-light: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            --shadow-medium: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-large: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-hero: linear-gradient(135deg, rgba(102, 126, 234, 0.8) 0%, rgba(118, 75, 162, 0.8) 100%);
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --accent-primary: #60a5fa;
+            --accent-hover: #3b82f6;
+            --accent-light: #1e3a8a;
+            --border-color: #475569;
+            --shadow-light: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+            --shadow-medium: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+            --shadow-large: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .navbar {
+            background: var(--bg-primary);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            background-color: rgba(var(--bg-primary-rgb, 255, 255, 255), 0.85);
+            height: 84px;
+            display: flex;
+            align-items: center;
+        }
+        
+        [data-theme="dark"] .navbar {
+             background-color: rgba(15, 23, 42, 0.85);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .logo {
+            width: 77px;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s ease, transform 0.3s ease;
+            position: relative;
+            padding: 0.25rem 0;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--accent-primary);
+            transform: translateY(-2px);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -0.3rem;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--accent-primary);
+            border-radius: 2px;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 0.4rem 0.6rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle:hover {
+            background: var(--bg-secondary);
+            transform: scale(1.05);
+        }
+
+        .theme-icon {
+            font-size: 1.1rem;
+        }
+
+        #menu-toggle {
+            display: none;
+        }
+
+        .menu-icon {
+            display: none;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .menu-icon span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: var(--text-primary);
+            margin: 5px;
+            border-radius: 2px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+                        url('images/apu-background-img.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+        }
+
+        .hero-description {
+            font-size: clamp(1.125rem, 3vw, 1.5rem);
+            margin-bottom: 2rem;
+            max-width: 48rem;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0.9;
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            text-align: center;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background: var(--accent-primary);
+            color: white;
+            box-shadow: var(--shadow-medium);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-large);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-outline:hover {
+            background: white;
+            color: var(--text-primary);
+        }
+
+        .btn-accent {
+            background: var(--gradient-secondary);
+            color: white;
+            box-shadow: var(--shadow-medium);
+        }
+
+        .btn-accent:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-large);
+        }
+
+        .arrow {
+            transition: transform 0.3s ease;
+        }
+
+        .btn:hover .arrow {
+            transform: translateX(4px);
+        }
+
+        .page-header {
+            padding: 5rem 0;
+            text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)),
+                        url('images/classroom-apu.webp');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: #fff;
+        }
+
+        .page-title {
+            font-size: clamp(2.5rem, 6vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+        
+        .page-header .page-title {
+             color: #fff;
+        }
+
+        .page-description {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 42rem;
+            margin: 0 auto;
+        }
+        
+        .page-header .page-description {
+             color: rgba(255,255,255,0.9);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .section-description {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 42rem;
+            margin: 0 auto;
+        }
+
+        .features {
+            padding: 5rem 0;
+            background: var(--bg-secondary);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: var(--bg-primary);
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: var(--shadow-medium);
+            border: 1px solid var(--border-color);
+            transition: transform 0.5s ease, 
+                        box-shadow 0.8s ease, 
+                        border-color 0.8s ease;
+        }
+
+        .feature-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 32px rgba(59, 130, 246, 0.45);
+            border-color: var(--accent-primary);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .feature-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .cta {
+            padding: 5rem 0;
+            text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.7)),
+            url('images/apu-center.jpg');
+            background-size: cover;
+            background-position: 2rm;
+            background-repeat: no-repeat;
+        }
+
+        .cta-title {
+            font-size: clamp(2rem, 5vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .cta-description {
+            font-size: 1.25rem;
+            color: white;
+            margin-bottom: 2rem;
+            max-width: 42rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer {
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            padding: 3rem 0 1.5rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.875rem;
+        }
+
+        .footer a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer a:hover {
+            color: var(--accent-primary);
+        }
+
+        .footer-top {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-brand {
+            max-width: 280px;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .footer-logo {
+            width: 50px;
+            height: auto;
+        }
+
+        .footer-brand-text {
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: var(--text-primary);
+        }
+
+        .footer-description {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-section h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .footer-icons {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .footer-icons img {
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
+            filter: grayscale(60%);
+            transition: filter 0.2s ease;
+        }
+        
+        [data-theme="dark"] .footer-icons img {
+            filter: brightness(0) invert(1);
+        }
+
+        .footer-icons img:hover {
+            filter: none;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            padding-top: 1rem;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+        
+        .faq-item { display: none; }
+        .module-card { display: none; }
+        .course-card { display: none; }
+        .tool-card { display: none; }
+
+        @media (max-width: 992px) {
+            .menu-icon {
+                display: block;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 84px;
+                left: 0;
+                width: 100%;
+                flex-direction: column;
+                background-color: var(--bg-primary);
+                border-bottom: 1px solid var(--border-color);
+                padding: 1rem 0;
+                gap: 0;
+                transform: translateY(-120%);
+                transition: transform 0.4s ease-in-out, box-shadow 0.4s ease;
+                box-shadow: none;
+                z-index: 99;
+            }
+
+            .nav-link {
+                padding: 1rem 1.5rem;
+                width: 100%;
+                text-align: center;
+            }
+            
+            .nav-link:hover,
+            .nav-link.active {
+                transform: translateY(0);
+                background-color: var(--bg-secondary);
+            }
+            
+            .nav-link.active::after {
+                display: none;
+            }
+
+            .theme-toggle {
+                margin: 0.5rem 1.5rem;
+                align-self: center;
+            }
+
+            #menu-toggle:checked ~ .nav-links {
+                transform: translateY(0);
+                box-shadow: var(--shadow-medium);
+            }
+
+            #menu-toggle:checked + .menu-icon span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+            #menu-toggle:checked + .menu-icon span:nth-child(2) {
+                opacity: 0;
+            }
+            #menu-toggle:checked + .menu-icon span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -6px);
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-top {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+        }
+        
+        @media (min-width: 993px) {
+            .nav-links {
+                display: flex !important;
+            }
+        }
+            #loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #0a0f1a, #001f3f, #003366);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* stays on top */
+}
+    </style>
+</head>
+<body>
+    <div id="loader">
+          <img src="images/tech startup.gif" alt="loading animation" />
+      </div>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <img src="images/apu-logo.png" alt="APU Logo" class="logo">
+            </div>
+            
+            <input type="checkbox" id="menu-toggle">
+            <label for="menu-toggle" class="menu-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
+            
+            <div class="nav-links">
+                <a href="index.html" class="nav-link active">Home</a>
+                <a href="activities.html" class="nav-link">Activity</a>
+                <a href="courses.html" class="nav-link">Events</a>
+                <a href="tools.html" class="nav-link">Tools</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="my-acc.html" class="nav-link">Account</a>
+                <a href="blog.html" class="nav-link">Blog</a>
+                <a href="modules.html" class="nav-link">Modules</a>
+              
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+                    <span class="theme-icon">🌙</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+            <h1 class="hero-title">
+                Where APU’s Cybersecurity Community Connects In
+                <span class="gradient-text">One Place</span>
+            </h1>
+            <p class="hero-description">
+                Never miss out on what’s happening around campus. Browse upcoming courses, workshops, and university events, and take part in the experiences that shape your student journey.
+            </p>
+            <div class="hero-buttons">
+                <a href="courses.html" class="btn btn-primary">
+                    Join Us Now!
+                    <span class="arrow">→</span>
+                </a>
+                <a href="about.html" class="btn btn-outline">
+                    Learn More
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Why This Platform?</h2>
+                <p class="section-description">
+                   We created this website to make it easier for students to discover and join courses, workshops, and university events offered by the APU.
+                </p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📚</div>
+                    <h3 class="feature-title">All in One Place</h3>
+                    <p class="feature-description">Find every short course and event organized by the university in a single platform.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💻</div>
+                    <h3 class="feature-title">Clear and Organized</h3>
+                    <p class="feature-description">View course details, schedules, and durations at a glance.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <h3 class="feature-title">Academic Quality</h3>
+                    <p class="feature-description">Learn from university faculty and experienced instructors.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">Skill Development</h3>
+                    <p class="feature-description">Enhance your personal and academic skills through short, focused learning experiences.</p>
+                </div>
+                 <div class="feature-card">
+                    <div class="feature-icon">🤝</div>
+                    <h3 class="feature-title">Networking Opportunities</h3>
+                    <p class="feature-description">Meet peers from different faculties and expand your university connections.</p>
+                </div>
+                 <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3 class="feature-title">Beyond the Classroom</h3>
+                    <p class="feature-description">Explore topics that go beyond your main program and broaden your perspective.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="container">
+            <h2 class="cta-title">Ready to Start Your Journey?</h2>
+            <p class="cta-description">
+                Discover workshops, seminars, and events designed to expand your knowledge and skills.
+            </p>
+            <a href="courses.html" class="btn btn-accent">
+                Browse All Events
+                <span class="arrow">→</span>
+            </a>
+        </div>
+    </section>
+    
+    <footer class="footer">
+      <div class="container footer-top">
+        <div class="footer-brand">
+          <img src="images/logo.png" alt="APU Logo" class="footer-logo">
+          <span class="footer-brand-text">APU-CYBER-CLUB</span>
+          <p class="footer-description">
+            Empowering learners worldwide with cutting-edge education and practical skills.
+          </p>
+        </div>
+
+        <div class="footer-links">
+          <div class="footer-section">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="courses.html">Events</a></li>
+              <li><a href="tools.html">Tools</a></li>
+              <li><a href="about.html">About</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h4>Resources</h4>
+            <ul>
+              <li><a href="blog.html">Blog</a></li>
+              <li><a href="modules.html">Modules</a></li>
+              <li><a href="faq.html">FAQ</a></li>
+              <li><a href="#">Support</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-section">
+            <h4>Legal</h4>
+            <ul>
+              <li><a href="terms.html">Terms & Conditions</a></li>
+              <li><a href="privacy.html">Privacy Policy</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+                <h4>Follow Us</h4>
+                <div class="footer-icons">
+                <a href="https://share.google/yN5tUcceP5J6FSXSu"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook"></a>
+                <a href="https://x.com/AsiaPacificU?t=HVzU0WvPy2al_yvAiaVZw&s=09"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/twitter.svg" alt="Twitter"></a>
+                <a href="https://www.instagram.com/asiapacificuniversity?igsh=dHhtaXdqZmEyaGg0 "><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram"></a>
+                <a href="https://www.linkedin.com/school/apumalaysia/"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn"></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2025 APU-CYBER-CLUB. All rights reserved. | Final Year Project</p>
+      </div>
+    </footer>
+
+
+  <script>
+    class ThemeManager {
+      constructor() {
+        this.theme = localStorage.getItem('theme') || 'light';
+        this.init();
+      }
+      
+      init() {
+        this.applyTheme();
+        this.bindEvents();
+      }
+      
+      applyTheme() {
+        document.documentElement.setAttribute('data-theme', this.theme);
+        this.updateThemeIcon();
+      }
+      
+      updateThemeIcon() {
+        const themeIcons = document.querySelectorAll('.theme-icon');
+        themeIcons.forEach(icon => {
+          icon.textContent = this.theme === 'dark' ? '☀️' : '🌙';
+        });
+      }
+      
+      toggleTheme() {
+        this.theme = this.theme === 'dark' ? 'light' : 'dark';
+        localStorage.setItem('theme', this.theme);
+        this.applyTheme();
+      }
+      
+      bindEvents() {
+        const themeToggles = document.querySelectorAll('#theme-toggle');
+        themeToggles.forEach(toggle => {
+          toggle.addEventListener('click', () => this.toggleTheme());
+        });
+      }
+    }
+
+    class NavigationManager {
+      constructor() {
+        this.init();
+      }
+      
+      init() {
+        this.setActiveNavLink();
+        this.bindEvents();
+      }
+      
+      setActiveNavLink() {
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          const href = link.getAttribute('href');
+          if (href === currentPage || (currentPage === '' && href === 'index.html')) {
+            link.classList.add('active');
+          }
+        });
+      }
+      
+      bindEvents() {
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+          anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+              target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+              });
+            }
+          });
+        });
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      new ThemeManager();
+      new NavigationManager();
+      
+      const tabs=document.querySelectorAll('.tab');
+      const contents=document.querySelectorAll('.tab-content');
+      tabs.forEach(tab=>{
+        tab.addEventListener('click',()=>{
+          tabs.forEach(t=>t.classList.remove('active'));
+          tab.classList.add('active');
+          const target=tab.dataset.target;
+          contents.forEach(c=>c.style.display=c.id===target?'block':'none');
+        });
+      });
+    });
+    //loading animation
+window.addEventListener("load", function() {
+    const loader = document.getElementById("loader");
+
+    // Minimum display time (in milliseconds)
+    const MIN_TIME = 1200; // 3.2 seconds
+
+    const start = performance.timing.navigationStart;
+    const end = Date.now();
+    const loadTime = end - start;
+
+    // If page loaded too fast, delay hiding
+    const delay = Math.max(0, MIN_TIME - loadTime);
+
+    setTimeout(() => {
+        loader.style.opacity = "0";
+        loader.style.transition = "opacity 0.5s ease";
+        setTimeout(() => loader.style.display = "none", 500);
+    }, delay);
+});
+  </script>
+  </body>
+</html>

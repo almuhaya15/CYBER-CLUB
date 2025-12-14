@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login | APU-CYBER-CLUB</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        line-height: 1.6;
+        color: var(--text-primary);
+        background-color: var(--bg-primary);
+        transition: all 0.3s ease;
+    }
+
+    :root {
+        --bg-primary: #ffffff;
+        --bg-secondary: #f8fafc;
+        --bg-tertiary: #f1f5f9;
+        --text-primary: #1e293b;
+        --text-secondary: #64748b;
+        --text-muted: #94a3b8;
+        --accent-primary: #3b82f6;
+        --accent-hover: #2563eb;
+        --accent-light: #dbeafe;
+        --border-color: #e2e8f0;
+        --shadow-light: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        --shadow-medium: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        --shadow-large: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+
+    [data-theme="dark"] {
+        --bg-primary: #0f172a;
+        --bg-secondary: #1e293b;
+        --bg-tertiary: #334155;
+        --text-primary: #f8fafc;
+        --text-secondary: #cbd5e1;
+        --text-muted: #94a3b8;
+        --accent-primary: #60a5fa;
+        --accent-hover: #3b82f6;
+        --accent-light: #1e3a8a;
+        --border-color: #475569;
+        --shadow-light: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+        --shadow-medium: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        --shadow-large: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    .navbar {
+        background: var(--bg-primary);
+        border-bottom: 1px solid var(--border-color);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(10px);
+        background-color: rgba(var(--bg-primary-rgb, 255, 255, 255), 0.85);
+        height: 84px;
+        display: flex;
+        align-items: center;
+    }
+    
+    [data-theme="dark"] .navbar {
+         background-color: rgba(15, 23, 42, 0.85);
+    }
+
+    .navbar .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+
+    .nav-brand {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        text-decoration: none;
+        color: var(--text-primary);
+    }
+
+    .logo {
+        width: 77px;
+        height: auto;
+        object-fit: contain;
+    }
+
+    .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+    }
+
+    .nav-link {
+        text-decoration: none;
+        color: var(--text-secondary);
+        font-weight: 500;
+        font-size: 0.95rem;
+        transition: color 0.3s ease, transform 0.3s ease;
+        position: relative;
+        padding: 0.25rem 0;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+        color: var(--accent-primary);
+        transform: translateY(-2px);
+    }
+
+    .nav-link.active::after {
+        content: '';
+        position: absolute;
+        bottom: -0.3rem;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: var(--accent-primary);
+        border-radius: 2px;
+    }
+
+    .theme-toggle {
+        background: none;
+        border: 1px solid var(--border-color);
+        border-radius: 0.5rem;
+        padding: 0.4rem 0.6rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        color: var(--text-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .theme-toggle:hover {
+        background: var(--bg-secondary);
+        transform: scale(1.05);
+    }
+
+    .theme-icon {
+        font-size: 1.1rem;
+    }
+
+    #menu-toggle {
+        display: none;
+    }
+
+    .menu-icon {
+        display: none;
+        cursor: pointer;
+        z-index: 1001;
+    }
+
+    .menu-icon span {
+        display: block;
+        width: 25px;
+        height: 3px;
+        background-color: var(--text-primary);
+        margin: 5px;
+        border-radius: 2px;
+        transition: all 0.3s ease-in-out;
+    }
+    
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
+        text-align: center;
+        justify-content: center;
+    }
+    
+    .page-header {
+        padding: 5rem 0;
+        text-align: center;
+        background: var(--bg-secondary);
+    }
+
+    .page-title {
+        font-size: clamp(2.5rem, 6vw, 3.5rem);
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: var(--text-primary);
+    }
+    
+    .page-description {
+        font-size: 1.25rem;
+        color: var(--text-secondary);
+        max-width: 42rem;
+        margin: 0 auto;
+    }
+    
+    .footer {
+        background: var(--bg-secondary);
+        color: var(--text-secondary);
+        padding: 3rem 0 1.5rem;
+        border-top: 1px solid var(--border-color);
+        font-size: 0.875rem;
+    }
+
+    .footer a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+
+    .footer a:hover {
+        color: var(--accent-primary);
+    }
+
+    .footer-top {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .footer-brand {
+        max-width: 280px;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .footer-logo {
+        width: 50px;
+        height: auto;
+    }
+
+    .footer-brand-text {
+        font-weight: 600;
+        font-size: 1.2rem;
+        color: var(--text-primary);
+    }
+
+    .footer-description {
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+        line-height: 1.5;
+    }
+
+    .footer-links {
+        display: flex;
+        gap: 3rem;
+        flex-wrap: wrap;
+    }
+
+    .footer-section h4 {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+        color: var(--text-primary);
+    }
+
+    .footer-section ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .footer-icons {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+    }
+
+    .footer-icons img {
+        width: 28px;
+        height: 28px;
+        object-fit: contain;
+        filter: grayscale(60%);
+        transition: filter 0.2s ease;
+    }
+    
+    [data-theme="dark"] .footer-icons img {
+        filter: brightness(0) invert(1);
+    }
+
+    .footer-icons img:hover {
+        filter: none;
+    }
+
+    .footer-bottom {
+        text-align: center;
+        border-top: 1px solid var(--border-color);
+        padding-top: 1rem;
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+    }
+    
+    .faq-item { display: none; }
+    .module-card { display: none; }
+    .course-card { display: none; }
+    .tool-card { display: none; }
+    .feature-card { display: none; }
+    .filter-btn { display: none; }
+    .pagination { display: none; }
+    
+    @media (max-width: 992px) {
+        .menu-icon {
+            display: block;
+        }
+
+        .nav-links {
+            position: absolute;
+            top: 84px;
+            left: 0;
+            width: 100%;
+            flex-direction: column;
+            background-color: var(--bg-primary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 0;
+            gap: 0;
+            transform: translateY(-120%);
+            transition: transform 0.4s ease-in-out, box-shadow 0.4s ease;
+            box-shadow: none;
+            z-index: 99;
+        }
+
+        .nav-link {
+            padding: 1rem 1.5rem;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .nav-link:hover,
+        .nav-link.active {
+            transform: translateY(0);
+            background-color: var(--bg-secondary);
+        }
+        
+        .nav-link.active::after {
+            display: none;
+        }
+
+        .theme-toggle {
+            margin: 0.5rem 1.5rem;
+            align-self: center;
+        }
+
+        #menu-toggle:checked ~ .nav-links {
+            transform: translateY(0);
+            box-shadow: var(--shadow-medium);
+        }
+
+        #menu-toggle:checked + .menu-icon span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        #menu-toggle:checked + .menu-icon span:nth-child(2) {
+            opacity: 0;
+        }
+        #menu-toggle:checked + .menu-icon span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+        
+        .footer-top {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .footer-links {
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+    }
+    
+    @media (min-width: 993px) {
+        .nav-links {
+            display: flex !important;
+        }
+    }
+
+    :root {
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --line: #e5e7eb;
+      --shadow: 0 25px 40px rgba(0,0,0,.08);
+      --focus: #2563EB;
+      --grad-a: #2563EB;
+      --grad-b: #FACC15;
+      --btn-grad: linear-gradient(90deg, var(--grad-a), var(--grad-b));
+      --radius: 20px;
+    }
+    
+    [data-theme="dark"] {
+        --card: #1e293b;
+        --text: #f8fafc;
+        --muted: #94a3b8;
+        --line: #475569;
+        --shadow: 0 25px 40px rgba(0,0,0,.2);
+        --focus: #60a5fa;
+    }
+
+    body {
+      background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.5)),
+                  url('images/apu-background-img.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      font-family: "Inter", sans-serif;
+      color: var(--text);
+    }
+
+    .title{
+      text-align:center;
+      font-weight:600;
+      margin:48px 0 28px;
+      color: #fff;
+    }
+
+    .auth{
+      width: 900px;
+      max-width: 90vw;
+      margin: 0 auto 134px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      border-radius: var(--radius);
+      background: var(--card);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+
+    .pane--left{
+      padding: 48px 56px;
+      position:relative;
+    }
+    
+    .pane--left h2{
+      font-size: 28px;
+      margin: 0 0 24px;
+      font-weight:700;
+      color: var(--text);
+    }
+
+    .social{
+      position:absolute;
+      top: 40px;
+      right: 40px;
+      display:flex;
+      gap:12px;
+    }
+    
+    .social button{
+      width:40px;height:40px;border-radius:999px;
+      border:1px solid var(--line);
+      background: var(--card);
+      display:grid;place-items:center;
+      cursor:pointer;
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+    
+    .social button:hover{ transform: translateY(-2px); box-shadow:0 8px 18px rgba(0,0,0,.08); }
+
+    .field{
+      margin-bottom:18px;
+    }
+    
+    .label{
+      display:block;
+      font-size:12px;
+      letter-spacing:.08em;
+      font-weight:700;
+      color: var(--text-secondary);
+      
+      margin:8px 0 8px;
+      
+    }
+    
+    .input{
+      width:100%;
+      height:48px;
+      border-radius: 999px;
+      border:1px solid var(--line);
+      background: var(--bg-tertiary);
+      padding:0 18px;
+      outline:none;
+      font-size:15px;
+      transition:border-color .15s ease, box-shadow .15s ease, background .15s ease;
+      color: var(--text);
+    }
+    
+    .input::placeholder{color: var(--text-muted)}
+    
+    .input:focus{
+      border-color: var(--focus);
+      background: var(--bg-primary);
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+    }
+    
+    [data-theme="dark"] .input:focus {
+        box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.2);
+    }
+
+    .row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      margin-top:14px;
+    }
+
+    .checkbox{
+      display:flex;align-items:center;gap:10px;color:var(--text-secondary);font-weight:600;
+      user-select:none;cursor:pointer;
+    }
+    
+    .checkbox input{
+      width:18px;height:18px;border-radius:4px;accent-color:var(--accent-primary);cursor:pointer;
+    }
+    
+    .link{
+      color:var(--muted);
+      text-decoration:none;
+      font-weight:600;
+    }
+    .link:hover{ text-decoration:underline; }
+
+    .btn{
+      width:100%;
+      height:52px;
+      border:none; outline:none;
+      border-radius:999px;
+      background: var(--btn-grad);
+      color:#fff; font-weight:700; font-size:16px;
+      cursor:pointer;
+      margin-top:8px;
+      transition: filter .15s ease, transform .06s ease;
+    }
+    
+    .btn:active{ transform: translateY(1px); }
+    .btn:hover{ filter: brightness(1.03); }
+
+    .hint{
+      font-size:12px;color:var(--muted);margin-top:8px;
+    }
+
+    .pane--right{
+      position:relative;
+      background: linear-gradient(135deg, var(--grad-a), var(--grad-b));
+      color:#fff;
+      display:grid;
+      place-items:center;
+      padding: 48px 40px;
+    }
+    
+    .right-inner{
+      text-align:center;
+      max-width: 360px;
+    }
+    
+    .welcome{
+      font-size:28px;font-weight:800;margin-bottom:10px;
+    }
+    
+    .sub{
+      opacity:.95;margin-bottom:22px;
+    }
+    
+    .btn--outline{
+      background: transparent;
+      border:2px solid rgba(255,255,255,.7);
+      padding:13px 28px;
+      color:#fff;
+      border-radius:999px;
+      font-weight:700;
+      cursor:pointer;
+      transition: background .15s ease, transform .06s ease, border-color .15s ease;
+    }
+    
+    .btn--outline:hover{ background: rgba(255,255,255,.08); border-color:#fff; }
+    .btn--outline:active{ transform: translateY(1px); }
+
+    .drop{
+      position:absolute; inset:auto 24px -18px 24px;
+      height:36px; filter:blur(10px);
+      background: radial-gradient(50% 50% at 50% 50%, rgba(0,0,0,.18), transparent 70%);
+      opacity:.4; pointer-events:none;
+    }
+
+    @media (max-width: 992px){
+        .auth {
+            grid-template-columns: 1fr;
+        }
+        .pane--right {
+            display: none;
+        }
+    }
+        #loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #0a0f1a, #001f3f, #003366);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* stays on top */
+}
+  </style>
+</head>
+<body>
+  <div id="loader">
+          <img src="images/tech startup.gif" alt="loading animation" />
+      </div>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <img src="images/apu-logo.png" alt="APU Logo" class="logo">
+            </div>
+            
+            <input type="checkbox" id="menu-toggle">
+            <label for="menu-toggle" class="menu-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
+            
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="activities.html" class="nav-link">Activity</a>
+                <a href="courses.html" class="nav-link">Events</a>
+                <a href="tools.html" class="nav-link">Tools</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="my-acc.html" class="nav-link">Account</a>
+                <a href="blog.html" class="nav-link">Blog</a>
+                <a href="modules.html" class="nav-link">Modules</a>
+                
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+                    <span class="theme-icon">🌙</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+  <h1 class="title">Login</h1>
+
+  <main class="auth" aria-label="Login card">
+    <section class="pane--left">
+      <div class="social" aria-label="Social sign-in options">
+        <button title="Sign in with Facebook" aria-label="Facebook">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#3b5998" aria-hidden="true">
+            <path d="M22 12.07C22 6.48 17.52 2 11.93 2S2 6.48 2 12.07c0 5.01 3.66 9.16 8.44 9.93v-7.02H7.9v-2.91h2.54V9.41c0-2.5 1.49-3.88 3.77-3.88 1.09 0 2.23.19 2.23.19v2.46h-1.26c-1.24 0-1.62.77-1.62 1.56v1.87h2.76l-.44 2.91h-2.32V22c4.78-.77 8.44-4.92 8.44-9.93z"/>
+          </svg>
+        </button>
+        <button title="Sign in with Twitter/X" aria-label="Twitter">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="var(--text)" aria-hidden="true">
+            <path d="M18.244 2H21l-6.5 7.43L22 22h-6.93l-4.87-6.35L4.5 22H2l7.09-8.1L2 2h6.93l4.47 5.83L18.244 2Zm-1.21 18h2.02L7.04 4H5.02l12.014 16Z"/>
+          </svg>
+        </button>
+      </div>
+
+      <h2>Sign In</h2>
+
+      <form id="loginForm" novalidate>
+        <label class="label" for="username">USERNAME</label>
+        <div class="field">
+          <input class="input" id="username" name="username" type="text" placeholder="Username" autocomplete="username" required />
+        </div>
+
+        <label class="label" for="password">PASSWORD</label>
+        <div class="field">
+          <input class="input" id="password" name="password" type="password" placeholder="Password" autocomplete="current-password" required minlength="6" />
+        </div>
+
+        <button class="btn" type="submit">Sign In</button>
+
+        <div class="row">
+          <label class="checkbox">
+            <input type="checkbox" id="remember" /> Remember Me
+          </label>
+          <a class="link" href="#" id="forgot">Forgot Password</a>
+        </div>
+
+        <p class="hint" id="formHint" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section class="pane--right">
+      <div class="right-inner">
+        <div class="welcome">Welcome Back!</div>
+        <div class="sub">Log in to manage your courses, events, and campus activities.</div>
+
+        <a href="sign-up.html">
+        <button class="btn--outline" id="signup">Sign Up</button>
+        </a>
+      </div>
+      <div class="drop" aria-hidden="true"></div>
+    </section>
+  </main>
+
+    <footer class="footer">
+      <div class="container footer-top">
+        <div class="footer-brand">
+          <img src="images/logo.png" alt="APU Logo" class="footer-logo">
+          <span class="footer-brand-text">APU-CYBER-CLUB</span>
+          <p class="footer-description">
+            Empowering learners worldwide with cutting-edge education and practical skills.
+          </p>
+        </div>
+
+        <div class="footer-links">
+          <div class="footer-section">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="courses.html">Events</a></li>
+              <li><a href="tools.html">Tools</a></li>
+              <li><a href="about.html">About</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h4>Resources</h4>
+            <ul>
+              <li><a href="blog.html">Blog</a></li>
+              <li><a href="modules.html">Modules</a></li>
+              <li><a href="faq.html">FAQ</a></li>
+              <li><a href="#">Support</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-section">
+            <h4>Legal</h4>
+            <ul>
+              <li><a href="/terms.html">Terms & Conditions</a></li>
+              <li><a href="/privacy.html">Privacy Policy</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+                <h4>Follow Us</h4>
+                <div class="footer-icons">
+                <a href="https://share.google/yN5tUcceP5J6FSXSu"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook"></a>
+                <a href="https://x.com/AsiaPacificU?t=HVzU0WvPy2al_yvAiaVZw&s=09"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/twitter.svg" alt="Twitter"></a>
+                <a href="https://www.instagram.com/asiapacificuniversity?igsh=dHhtaXdqZmEyaGg0 "><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram"></a>
+                <a href="https://www.linkedin.com/school/apumalaysia/"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn"></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2025 APU-CYBER-CLUB. All rights reserved. | Final Year Project</p>
+      </div>
+    </footer>
+<script>
+/* -------------------------------
+   THEME MANAGER
+--------------------------------*/
+class ThemeManager {
+  constructor() {
+    this.theme = localStorage.getItem('theme') || 'light';
+    this.init();
+  }
+
+  init() {
+    this.applyTheme();
+    this.bindEvents();
+  }
+
+  applyTheme() {
+    document.documentElement.setAttribute('data-theme', this.theme);
+    this.updateThemeIcon();
+  }
+
+  updateThemeIcon() {
+    const icons = document.querySelectorAll('.theme-icon');
+    icons.forEach(icon => icon.textContent = this.theme === 'dark' ? '☀️' : '🌙');
+  }
+
+  toggleTheme() {
+    this.theme = this.theme === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('theme', this.theme);
+    this.applyTheme();
+  }
+
+  bindEvents() {
+    document.querySelectorAll('#theme-toggle').forEach(toggle => {
+      toggle.addEventListener('click', () => this.toggleTheme());
+    });
+  }
+}
+
+/* -------------------------------
+   NAVIGATION MANAGER
+--------------------------------*/
+class NavigationManager {
+  constructor() {
+    this.init();
+  }
+
+  init() {
+    this.setActiveNavLink();
+  }
+
+  setActiveNavLink() {
+    const current = window.location.pathname.split('/').pop();
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.classList.toggle('active', link.getAttribute('href') === current);
+    });
+  }
+}
+
+/* -------------------------------
+   LOGIN SYSTEM (NEW & CLEAN)
+--------------------------------*/
+const users = [
+  {
+    username: "dawad",
+    password: "084918",
+    name: "Mohammed Dawad",
+    tp: "TP084918",
+    image: "images/Dawad.png"
+  },
+  {
+    username: "ousman",
+    password: "085891",
+    name: "Ousman Sanokho",
+    tp: "TP085891",
+    image: "https://i.ibb.co/20SFhsSs/ousmane.jpg"
+  },
+  {
+    username: "fawaz",
+    password: "085495",
+    name: "Fawwaz Musaffa",
+    tp: "TP085495",
+    image: "https://i.ibb.co/QF95WBkT/fawwaz.jpg"
+  },
+  {
+    username: "gamil",
+    password: "088965",
+    name: "Mohammed Almuhaya",
+    tp: "TP088965",
+    image: "https://i.ibb.co/twLsjV5Q/muhammad-gamil.jpg"
+  }
+];
+
+const form = document.getElementById('loginForm');
+const hint = document.getElementById('formHint');
+
+/* Helper to display feedback */
+function showHint(message, type="info") {
+  hint.textContent = message;
+  hint.style.color =
+    type === "error" ? "#dc2626" :
+    type === "success" ? "#16a34a" :
+    "var(--muted)";
+}
+
+/* Handle Login */
+if (form) {
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const username = form.username.value.trim().toLowerCase();
+    const password = form.password.value.trim();
+
+    if (!username || !password) {
+      showHint("Please enter both username and password.", "error");
+      return;
+    }
+
+    const user = users.find(
+      u => u.username === username && u.password === password
+    );
+
+    if (!user) {
+      showHint("Incorrect username or password.", "error");
+      return;
+    }
+
+    // Save session data
+    localStorage.setItem("loggedIn", "true");
+    localStorage.setItem("userName", user.name);
+    localStorage.setItem("userTP", user.tp);
+    localStorage.setItem("userImage", user.image);
+    localStorage.setItem("username", user.username);
+
+    showHint("Login successful! Redirecting...", "success");
+
+    setTimeout(() => {
+      window.location.href = "my-acc.html";
+    }, 700);
+  });
+}
+
+/* Forgot password */
+document.getElementById("forgot")?.addEventListener("click", (e) => {
+  e.preventDefault();
+  showHint("Password reset function is disabled in demo.", "info");
+});
+
+/* -------------------------------
+   LOADER
+--------------------------------*/
+window.addEventListener("load", function() {
+  const loader = document.getElementById("loader");
+  setTimeout(() => {
+    loader.style.opacity = "0";
+    loader.style.transition = "opacity 0.5s ease";
+    setTimeout(() => loader.style.display = "none", 400);
+  }, 800);
+});
+
+/* Init global managers */
+document.addEventListener("DOMContentLoaded", () => {
+  new ThemeManager();
+  new NavigationManager();
+});
+</script>
+
+
+
+</body>
+</html>
